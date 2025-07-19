@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shipping Container Insulation Planner</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      background-color: #f5f7fa;
+      color: #333;
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      color: #1a1a1a;
+      font-weight: 500;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    #location-selection, #required-r-values, #insulation-selection {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    }
+    #insulation-selection {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+    .component {
+      padding: 15px;
+      border-radius: 8px;
+      background-color: #fafafa;
+      transition: box-shadow 0.2s;
+    }
+    .component:hover {
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      font-size: 0.95em;
+    }
+    select, input[type="number"], input[type="radio"] {
+      margin-bottom: 12px;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      font-size: 1em;
+      transition: border-color 0.2s;
+    }
+    select:focus, input[type="number"]:focus {
+      border-color: #3498db;
+      outline: none;
+    }
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+    .radio-group {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 10px;
+    }
+    svg {
+      margin-top: 10px;
+      background-color: #f0f4f8;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease;
+    }
+    #floor-insulation, #ceiling-insulation, #wall-insulation-inside, #wall-insulation-outside {
+      transition: all 0.3s ease;
+    }
+    .status-green {
+      color: #27ae60;
+      font-weight: 600;
+    }
+    .status-red {
+      color: #c0392b;
+      font-weight: 600;
+    }
+    #disclaimer {
+      font-size: 0.85em;
+      color: #666;
+      text-align: center;
+      margin-top: 30px;
+      padding: 15px;
+      background-color: #fafafa;
+      border-radius: 8px;
+    }
+    /* Corrugated Wall Path */
+    .corrugated-wall {
+      fill: #a0a0a0;
+      stroke: #888;
+      stroke-width: 0.5;
+    }
+    .insulation {
+      fill: url(#insulationGradient);
+      opacity: 0.9;
+    }
+    /* Mobile-Friendly Adjustments */
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+        margin: 10px;
+      }
+      #insulation-selection {
+        grid-template-columns: 1fr;
+      }
+      .radio-group {
+        flex-direction: column;
+        gap: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Shipping Container Insulation Planner</h1>
+
+    <!-- Location Selection -->
+    <div id="location-selection">
+      <label for="state">Select Your State:</label>
+      <select id="state" onchange="updateClimateZones()">
+        <option value="">-- Select State --</option>
+        <!-- States populated via JavaScript -->
+      </select>
+
+      <label for="climateZone">Select Climate Zone:</label>
+      <select id="climateZone" onchange="displayRequiredRValues()">
+        <option value="">-- Select Climate Zone --</option>
+      </select>
+    </div>
+
+    <!-- Required R-Values Display -->
+    <div id="required-r-values" style="display: none;">
+      <h2>Required R-Values (IECC 2021)</h2>
+      <p><strong>Ceiling:</strong> R-<span id="req-ceiling"></span></p>
+      <p><strong>Walls:</strong> R-<span id="req-walls"></span></p>
+      <p><strong>Floor:</strong> R-<span id="req-floor"></span></p>
+    </div>
+
+    <!-- Insulation Selection -->
+    <div id="insulation-selection">
+      <!-- Floor -->
+      <div class="component" id="floor">
+        <h3>Floor Insulation</h3>
+        <label for="floor-type">Insulation Type:</label>
+        <select id="floor-type">
+          <option value="sprayFoam">Spray Foam (R-6/inch)</option>
+          <option value="batt">Batt (R-3.5/inch)</option>
+          <option value="polyiso">Polyiso (R-6/inch)</option>
+        </select>
+        <label for="floor-thickness">Thickness (inches):</label>
+        <input type="number" id="floor-thickness" min="0" step="0.1" value="0">
+        <p>Provided: R-<span id="floor-provided">0</span></p>
+        <p>Status: <span id="floor-status" class="status-red">Does not meet requirement</span></p>
+        <svg viewBox="0 0 200 80" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="insulationGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#5ab2ff" />
+              <stop offset="100%" stop-color="#3498db" />
+            </linearGradient>
+          </defs>
+          <rect x="0" y="50" width="200" height="30" fill="#a0a0a0" rx="2" /> <!-- Floor base with rounded edges -->
+          <rect x="0" y="50" width="200" height="0" class="insulation" id="floor-insulation" transform="translate(0, -0)" /> <!-- Insulation above, grows upward -->
+        </svg>
+      </div>
+
+      <!-- Ceiling -->
+      <div class="component" id="ceiling">
+        <h3>Ceiling Insulation</h3>
+        <label for="ceiling-type">Insulation Type:</label>
+        <select id="ceiling-type">
+          <option value="sprayFoam">Spray Foam (R-6/inch)</option>
+          <option value="batt">Batt (R-3.5/inch)</option>
+          <option value="polyiso">Polyiso (R-6/inch)</option>
+        </select>
+        <label for="ceiling-thickness">Thickness (inches):</label>
+        <input type="number" id="ceiling-thickness" min="0" step="0.1" value="0">
+        <p>Provided: R-<span id="ceiling-provided">0</span></p>
+        <p>Status: <span id="ceiling-status" class="status-red">Does not meet requirement</span></p>
+        <svg viewBox="0 0 200 80" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="insulationGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#5ab2ff" />
+              <stop offset="100%" stop-color="#3498db" />
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="200" height="30" fill="#a0a0a0" rx="2" /> <!-- Ceiling base with rounded edges -->
+          <rect x="0" y="30" width="200" height="0" class="insulation" id="ceiling-insulation" /> <!-- Insulation below, grows downward -->
+        </svg>
+      </div>
+
+      <!-- Walls -->
+      <div class="component" id="walls">
+        <h3>Wall Insulation</h3>
+        <label>Configuration:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="wall-config" value="cavityOnly" checked onclick="toggleWallInputs()"> Cavity Only</label>
+          <label><input type="radio" name="wall-config" value="cavityContinuous" onclick="toggleWallInputs()"> Cavity + Continuous</label>
+        </div>
+        <label>Location:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="wall-location" value="inside" checked onclick="updateWallRValue()"> Inside</label>
+          <label><input type="radio" name="wall-location" value="outside" onclick="updateWallRValue()"> Outside</label>
+        </div>
+
+        <div id="wall-cavity-inputs">
+          <label for="wall-cavity-type">Cavity Type:</label>
+          <select id="wall-cavity-type">
+            <option value="sprayFoam">Spray Foam (R-6/inch)</option>
+            <option value="batt">Batt (R-3.5/inch)</option>
+            <option value="polyiso">Polyiso (R-6/inch)</option>
+          </select>
+          <label for="wall-cavity-thickness">Thickness (inches):</label>
+          <input type="number" id="wall-cavity-thickness" min="0" step="0.1" value="0">
+        </div>
+
+        <div id="wall-continuous-inputs" style="display: none;">
+          <label for="wall-continuous-type">Continuous Type:</label>
+          <select id="wall-continuous-type">
+            <option value="sprayFoam">Spray Foam (R-6/inch)</option>
+            <option value="batt">Batt (R-3.5/inch)</option>
+            <option value="polyiso">Polyiso (R-6/inch)</option>
+          </select>
+          <label for="wall-continuous-thickness">Thickness (inches):</label>
+          <input type="number" id="wall-continuous-thickness" min="0" step="0.1" value="0">
+        </div>
+
+        <p>Provided: <span id="wall-provided">Cavity: R-0, Continuous: R-0</span></p>
+        <p>Status: <span id="wall-status" class="status-red">Does not meet requirement</span></p>
+        <svg viewBox="0 0 200 100" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="insulationGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#5ab2ff" />
+              <stop offset="100%" stop-color="#3498db" />
+            </linearGradient>
+            <pattern id="corrugationPattern" patternUnits="userSpaceOnUse" width="10" height="100">
+              <path d="M0 0 Q2.5 5, 5 0 Q7.5 -5, 10 0" fill="none" stroke="#888" stroke-width="0.5" />
+            </pattern>
+          </defs>
+          <!-- Corrugated Wall -->
+          <rect x="90" y="20" width="20" height="60" fill="#a0a0a0" rx="2" />
+          <rect x="90" y="20" width="20" height="60" fill="url(#corrugationPattern)" opacity="0.3" /> <!-- Corrugation overlay -->
+          <!-- Inside Insulation -->
+          <rect x="70" y="20" width="0" height="60" class="insulation" id="wall-insulation-inside" rx="2" />
+          <!-- Outside Insulation -->
+          <rect x="110" y="20" width="0" height="60" class="insulation" id="wall-insulation-outside" rx="2" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div id="disclaimer">
+      <p><strong>Disclaimer:</strong> This tool provides estimates based on IECC 2021 prescriptive R-values. Requirements may vary by location. Consult local building codes and professionals for accurate specifications.</p>
+    </div>
+
+    <script>
+      // Data (same as original)
+      const states = [
+        { name: "Alabama", code: "AL" }, { name: "Alaska", code: "AK" }, { name: "Arizona", code: "AZ" },
+        { name: "Arkansas", code: "AR" }, { name: "California", code: "CA" }, { name: "Colorado", code: "CO" },
+        { name: "Connecticut", code: "CT" }, { name: "Delaware", code: "DE" }, { name: "Florida", code: "FL" },
+        { name: "Georgia", code: "GA" }, { name: "Hawaii", code: "HI" }, { name: "Idaho", code: "ID" },
+        { name: "Illinois", code: "IL" }, { name: "Indiana", code: "IN" }, { name: "Iowa", code: "IA" },
+        { name: "Kansas", code: "KS" }, { name: "Kentucky", code: "KY" }, { name: "Louisiana", code: "LA" },
+        { name: "Maine", code: "ME" }, { name: "Maryland", code: "MD" }, { name: "Massachusetts", code: "MA" },
+        { name: "Michigan", code: "MI" }, { name: "Minnesota", code: "MN" }, { name: "Mississippi", code: "MS" },
+        { name: "Missouri", code: "MO" }, { name: "Montana", code: "MT" }, { name: "Nebraska", code: "NE" },
+        { name: "Nevada", code: "NV" }, { name: "New Hampshire", code: "NH" }, { name: "New Jersey", code: "NJ" },
+        { name: "New Mexico", code: "NM" }, { name: "New York", code: "NY" }, { name: "North Carolina", code: "NC" },
+        { name: "North Dakota", code: "ND" }, { name: "Ohio", code: "OH" }, { name: "Oklahoma", code: "OK" },
+        { name: "Oregon", code: "OR" }, { name: "Pennsylvania", code: "PA" }, { name: "Rhode Island", code: "RI" },
+        { name: "South Carolina", code: "SC" }, { name: "South Dakota", code: "SD" }, { name: "Tennessee", code: "TN" },
+        { name: "Texas", code: "TX" }, { name: "Utah", code: "UT" }, { name: "Vermont", code: "VT" },
+        { name: "Virginia", code: "VA" }, { name: "Washington", code: "WA" }, { name: "West Virginia", code: "WV" },
+        { name: "Wisconsin", code: "WI" }, { name: "Wyoming", code: "WY" }
+      ];
+
+      const stateClimateZones = {
+        "AL": ["3A"], "AK": ["7", "8"], "AZ": ["2B", "3B", "4B", "5B"], "AR": ["3A", "4A"],
+        "CA": ["2B", "3B", "3C", "4B", "5B", "6B"], "CO": ["4B", "5B", "6B", "7"], "CT": ["5A"],
+        "DE": ["4A"], "FL": ["1A", "2A"], "GA": ["2A", "3A", "4A"], "HI": ["1A"], "ID": ["5B", "6B"],
+        "IL": ["4A", "5A"], "IN": ["4A", "5A"], "IA": ["5A", "6A"], "KS": ["4A", "4B", "5A"],
+        "KY": ["4A", "5A"], "LA": ["2A", "3A"], "ME": ["6A"], "MD": ["4A"], "MA": ["5A"],
+        "MI": ["5A", "6A"], "MN": ["6A", "7"], "MS": ["3A"], "MO": ["4A", "5A"], "MT": ["5B", "6B", "7"],
+        "NE": ["5A", "5B"], "NV": ["3B", "4B", "5B"], "NH": ["6A"], "NJ": ["4A"], "NM": ["3B", "4B", "5B"],
+        "NY": ["4A", "5A", "6A"], "NC": ["3A", "4A"], "ND": ["6A", "7"], "OH": ["5A"], "OK": ["3A", "3B", "4A"],
+        "OR": ["4C", "5B", "6B"], "PA": ["4A", "5A"], "RI": ["5A"], "SC": ["3A"], "SD": ["5A", "6A"],
+        "TN": ["3A", "4A"], "TX": ["2A", "2B", "3A", "3B", "4A", "4B"], "UT": ["3B", "4B", "5B", "6B"],
+        "VT": ["6A"], "VA": ["4A"], "WA": ["4C", "5B", "6B"], "WV": ["4A", "5A"], "WI": ["6A", "7"],
+        "WY": ["5B", "6B", "7"]
+      };
+
+      const rValuesByZone = {
+        "1": { ceiling: "30", wall: "13", floor: "13" },
+        "1A": { ceiling: "30", wall: "13", floor: "13" },
+        "2": { ceiling: "38", wall: "13", floor: "13" },
+        "2A": { ceiling: "38", wall: "13", floor: "13" },
+        "2B": { ceiling: "38", wall: "13", floor: "13" },
+        "3": { ceiling: "38", wall: "20 or 13+5", floor: "19" },
+        "3A": { ceiling: "38", wall: "20 or 13+5", floor: "19" },
+        "3B": { ceiling: "38", wall: "20 or 13+5", floor: "19" },
+        "3C": { ceiling: "38", wall: "20 or 13+5", floor: "19" },
+        "4": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "19" },
+        "4A": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "19" },
+        "4B": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "19" },
+        "4C": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "19" },
+        "5": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" },
+        "5A": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" },
+        "5B": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" },
+        "6": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" },
+        "6A": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" },
+        "6B": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" },
+        "7": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" },
+        "8": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" }
+      };
+
+      const insulationRValues = {
+        "sprayFoam": 6,
+        "batt": 3.5,
+        "polyiso": 6
+      };
+
+      // Populate States
+      const stateSelect = document.getElementById('state');
+      states.forEach(state => {
+        const option = document.createElement('option');
+        option.value = state.code;
+        option.textContent = state.name;
+        stateSelect.appendChild(option);
+      });
+
+      // Update Climate Zones
+      function updateClimateZones() {
+        const state = stateSelect.value;
+        const zones = stateClimateZones[state] || [];
+        const climateZoneSelect = document.getElementById('climateZone');
+        climateZoneSelect.innerHTML = '<option value="">-- Select Climate Zone --</option>';
+        zones.forEach(zone => {
+          const option = document.createElement('option');
+          option.value = zone;
+          option.textContent = zone;
+          climateZoneSelect.appendChild(option);
+        });
+        displayRequiredRValues();
+      }
+
+      // Display Required R-Values
+      function displayRequiredRValues() {
+        const climateZone = document.getElementById('climateZone').value;
+        const rValues = rValuesByZone[climateZone];
+        if (rValues) {
+          document.getElementById('req-ceiling').textContent = rValues.ceiling;
+          document.getElementById('req-walls').textContent = rValues.wall;
+          document.getElementById('req-floor').textContent = rValues.floor;
+          document.getElementById('required-r-values').style.display = 'block';
+        } else {
+          document.getElementById('required-r-values').style.display = 'none';
+        }
+        updateFloorRValue();
+        updateCeilingRValue();
+        updateWallRValue();
+      }
+
+      // Floor R-Value Calculation
+      function updateFloorRValue() {
+        const type = document.getElementById('floor-type').value;
+        const thickness = parseFloat(document.getElementById('floor-thickness').value) || 0;
+        const R_provided = (insulationRValues[type] * thickness).toFixed(1);
+        document.getElementById('floor-provided').textContent = R_provided;
+
+        const climateZone = document.getElementById('climateZone').value;
+        const rValues = rValuesByZone[climateZone];
+        if (rValues) {
+          const R_required = parseFloat(rValues.floor);
+          document.getElementById('floor-status').textContent = R_provided >= R_required ? "Meets requirement" : "Does not meet requirement";
+          document.getElementById('floor-status').className = R_provided >= R_required ? "status-green" : "status-red";
+        }
+        // Adjust insulation height (grows upward from base)
+        const insHeight = thickness * 5; // Scaled for visual appeal
+        document.getElementById('floor-insulation').setAttribute('height', insHeight);
+        document.getElementById('floor-insulation').setAttribute('y', 80 - insHeight);
+      }
+
+      // Ceiling R-Value Calculation
+      function updateCeilingRValue() {
+        const type = document.getElementById('ceiling-type').value;
+        const thickness = parseFloat(document.getElementById('ceiling-thickness').value) || 0;
+        const R_provided = (insulationRValues[type] * thickness).toFixed(1);
+        document.getElementById('ceiling-provided').textContent = R_provided;
+
+        const climateZone = document.getElementById('climateZone').value;
+        const rValues = rValuesByZone[climateZone];
+        if (rValues) {
+          const R_required = parseFloat(rValues.ceiling);
+          document.getElementById('ceiling-status').textContent = R_provided >= R_required ? "Meets requirement" : "Does not meet requirement";
+          document.getElementById('ceiling-status').className = R_provided >= R_required ? "status-green" : "status-red";
+        }
+        // Adjust insulation height (grows downward from base)
+        const insHeight = thickness * 5; // Scaled
+        document.getElementById('ceiling-insulation').setAttribute('height', insHeight);
+      }
+
+      // Wall R-Value Calculation
+      function toggleWallInputs() {
+        const config = document.querySelector('input[name="wall-config"]:checked').value;
+        document.getElementById('wall-continuous-inputs').style.display = config === 'cavityContinuous' ? 'block' : 'none';
+        updateWallRValue();
+      }
+
+      function updateWallRValue() {
+        const config = document.querySelector('input[name="wall-config"]:checked').value;
+        const location = document.querySelector('input[name="wall-location"]:checked').value;
+        let R_cavity = 0, R_continuous = 0;
+
+        const cavityType = document.getElementById('wall-cavity-type').value;
+        const cavityThickness = parseFloat(document.getElementById('wall-cavity-thickness').value) || 0;
+        R_cavity = (insulationRValues[cavityType] * cavityThickness).toFixed(1);
+
+        if (config === 'cavityContinuous') {
+          const continuousType = document.getElementById('wall-continuous-type').value;
+          const continuousThickness = parseFloat(document.getElementById('wall-continuous-thickness').value) || 0;
+          R_continuous = (insulationRValues[continuousType] * continuousThickness).toFixed(1);
+        }
+
+        document.getElementById('wall-provided').textContent = `Cavity: R-${R_cavity}, Continuous: R-${R_continuous}`;
+
+        const climateZone = document.getElementById('climateZone').value;
+        const rValues = rValuesByZone[climateZone];
+        if (rValues) {
+          const requiredStr = rValues.wall;
+          const meetsReq = meetsWallRequirement(requiredStr, parseFloat(R_cavity), parseFloat(R_continuous));
+          document.getElementById('wall-status').textContent = meetsReq ? "Meets requirement" : "Does not meet requirement";
+          document.getElementById('wall-status').className = meetsReq ? "status-green" : "status-red";
+        }
+
+        // Adjust insulation widths (scaled for visual)
+        const cavityWidth = cavityThickness * 5;
+        const continuousWidth = (config === 'cavityContinuous' ? parseFloat(R_continuous) / insulationRValues[cavityType] * 5 : 0); // Approximate thickness
+        const insideWidth = (location === 'inside' ? cavityWidth + continuousWidth : continuousWidth);
+        const outsideWidth = (location === 'outside' ? cavityWidth + continuousWidth : continuousWidth);
+
+        document.getElementById('wall-insulation-inside').setAttribute('width', insideWidth);
+        document.getElementById('wall-insulation-inside').setAttribute('x', 90 - insideWidth);
+        document.getElementById('wall-insulation-outside').setAttribute('width', outsideWidth);
+      }
+
+      function meetsWallRequirement(requiredStr, R_cavity, R_continuous) {
+        const options = requiredStr.split(' or ');
+        for (let option of options) {
+          if (option.includes('+')) {
+            const [cavityReq, continuousReq] = option.split('+').map(s => parseFloat(s));
+            if (R_cavity >= cavityReq && R_continuous >= continuousReq) return true;
+          } else {
+            const cavityReq = parseFloat(option);
+            if (R_cavity >= cavityReq && R_continuous >= 0) return true;
+          }
+        }
+        return false;
+      }
+
+      // Event Listeners
+      document.getElementById('floor-type').addEventListener('change', updateFloorRValue);
+      document.getElementById('floor-thickness').addEventListener('input', updateFloorRValue);
+      document.getElementById('ceiling-type').addEventListener('change', updateCeilingRValue);
+      document.getElementById('ceiling-thickness').addEventListener('input', updateCeilingRValue);
+      document.getElementById('wall-cavity-type').addEventListener('change', updateWallRValue);
+      document.getElementById('wall-cavity-thickness').addEventListener('input', updateWallRValue);
+      document.getElementById('wall-continuous-type').addEventListener('change', updateWallRValue);
+      document.getElementById('wall-continuous-thickness').addEventListener('input', updateWallRValue);
+    </script>
+</body>
+</html>
