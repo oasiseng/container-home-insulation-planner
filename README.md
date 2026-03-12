@@ -1,7 +1,7 @@
 # Shipping Container Insulation Planner
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/yourusername/shipping-container-insulation-planner.svg?style=social)]([https://github.com/yourusername/shipping-container-insulation-planner/stargazers](https://github.com/oasiseng/shipping-container-insulation-planner/))
+[![GitHub stars](https://img.shields.io/github/stars/oasiseng/shipping-container-insulation-planner.svg?style=social)]([https://github.com/oasiseng/shipping-container-insulation-planner/stargazers](https://github.com/oasiseng/shipping-container-insulation-planner/))
 
 A sleek, interactive web-based tool to plan insulation for shipping container conversions based on IECC 2021 prescriptive R-values. Select your location to get required R-values for ceiling, walls, and floor, then choose insulation types and thicknesses to visualize compliance with elegant, animated graphics.
 
