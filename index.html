@@ -8,833 +8,171 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0c1118;
-      --surface: #141b26;
-      --surface-2: #1a2332;
-      --surface-3: #1f2b3d;
-      --border: rgba(148,163,184,0.1);
-      --border-hi: rgba(148,163,184,0.18);
-      --text: #e2e8f0;
-      --text-dim: #94a3b8;
-      --text-muted: #64748b;
-      --accent: #38bdf8;
-      --accent-dim: rgba(56,189,248,0.12);
-      --green: #34d399;
-      --green-dim: rgba(52,211,153,0.12);
-      --red: #f87171;
-      --red-dim: rgba(248,113,113,0.1);
-      --orange: #fb923c;
-      --spray-foam: #38bdf8;
-      --batt: #f59e0b;
-      --polyiso: #a78bfa;
-      --steel: #5b6b82;
-      --steel-hi: #7a8da5;
-      --radius: 16px;
-      --radius-sm: 10px;
-      --radius-xs: 6px;
+      --bg: #0c1118; --surface: #141b26; --surface-2: #1a2332; --surface-3: #1f2b3d;
+      --border: rgba(148,163,184,0.1); --border-hi: rgba(148,163,184,0.18);
+      --text: #e2e8f0; --text-dim: #94a3b8; --text-muted: #64748b;
+      --accent: #38bdf8; --accent-dim: rgba(56,189,248,0.12);
+      --green: #34d399; --green-dim: rgba(52,211,153,0.12);
+      --red: #f87171; --red-dim: rgba(248,113,113,0.1);
+      --radius: 16px; --radius-sm: 10px; --radius-xs: 6px;
       --font: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      font-family: var(--font);
-      color: var(--text);
-      background: var(--bg);
-      min-height: 100vh;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── LAYOUT ─────────────────────────── */
-    .shell {
-      max-width: 1360px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-
-    /* ── HEADER ─────────────────────────── */
-    .site-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 0 32px;
-    }
-    .site-header .brand {
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
+    body { font-family: var(--font); color: var(--text); background: var(--bg); min-height: 100vh; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    .shell { max-width: 1360px; margin: 0 auto; padding: 24px; }
+    .site-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 0 32px; }
+    .site-header .brand { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); }
     .site-header .brand span { color: var(--accent); }
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 12px;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: var(--accent-dim);
-      border: 1px solid rgba(56,189,248,0.15);
-    }
-    .tag::before {
-      content: '';
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    /* ── HERO ───────────────────────────── */
-    .hero {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    .hero h1 {
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      line-height: 1.08;
-      margin-bottom: 12px;
-      background: linear-gradient(135deg, #e2e8f0 30%, #38bdf8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero p {
-      color: var(--text-dim);
-      font-size: 1.05rem;
-      max-width: 640px;
-      margin: 0 auto;
-    }
-
-    /* ── MAIN GRID ──────────────────────── */
-    .app {
-      display: grid;
-      grid-template-columns: 320px 1fr 300px;
-      gap: 20px;
-      align-items: start;
-    }
-
-    /* ── PANELS ─────────────────────────── */
-    .panel {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
+    .tag { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-dim); border: 1px solid rgba(56,189,248,0.15); }
+    .tag::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); }
+    .hero { text-align: center; margin-bottom: 40px; }
+    .hero h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 12px; background: linear-gradient(135deg, #e2e8f0 30%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero p { color: var(--text-dim); font-size: 1.05rem; max-width: 640px; margin: 0 auto; }
+    .app { display: grid; grid-template-columns: 310px 1fr 300px; gap: 20px; align-items: start; }
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
     .panel + .panel { margin-top: 16px; }
-    .panel-head {
-      padding: 20px 20px 0;
-    }
-    .panel-head h2 {
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 4px;
-    }
-    .panel-head p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
+    .panel-head { padding: 20px 20px 0; }
+    .panel-head h2 { font-size: 1rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .panel-head p { font-size: 0.85rem; color: var(--text-muted); }
     .panel-body { padding: 16px 20px 20px; }
-
-    /* ── FORM ELEMENTS ──────────────────── */
     .field { margin-bottom: 14px; }
     .field:last-child { margin-bottom: 0; }
-    .field label, .field-legend {
-      display: block;
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-    select, input[type="number"] {
-      width: 100%;
-      font-family: var(--font);
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: var(--radius-sm);
-      padding: 10px 12px;
-      font-size: 0.92rem;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    select:focus, input[type="number"]:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-dim);
-    }
+    .field label, .field-legend { display: block; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 6px; }
+    select, input[type="number"] { width: 100%; font-family: var(--font); background: var(--surface-2); border: 1px solid var(--border); color: var(--text); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 0.92rem; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+    select:focus, input[type="number"]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
     select { cursor: pointer; }
     select option { background: var(--surface); }
-
-    .radio-row {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .radio-row label {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 7px 11px;
-      border-radius: 999px;
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--text-dim);
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      cursor: pointer;
-      text-transform: none;
-      letter-spacing: 0;
-      transition: 0.2s;
-      margin-bottom: 0;
-    }
-    .radio-row label:hover {
-      border-color: var(--accent);
-      color: var(--text);
-    }
-    .radio-row input[type="radio"] {
-      accent-color: var(--accent);
-      margin: 0;
-      width: 14px; height: 14px;
-    }
-
-    /* ── STAT CHIPS ─────────────────────── */
-    .stat-pair {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 12px;
-    }
-    .stat {
-      padding: 10px;
-      border-radius: var(--radius-sm);
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-    }
-    .stat .s-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      margin-bottom: 2px;
-    }
-    .stat .s-value {
-      font-family: var(--mono);
-      font-size: 1.05rem;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    /* ── BADGE ──────────────────────────── */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 10px;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-    .badge::before {
-      content: '';
-      width: 6px; height: 6px;
-      border-radius: 50%;
-    }
-    .badge-pass {
-      color: var(--green);
-      background: var(--green-dim);
-      border: 1px solid rgba(52,211,153,0.2);
-    }
+    .radio-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .radio-row label { display: inline-flex; align-items: center; gap: 6px; padding: 7px 11px; border-radius: 999px; font-size: 0.82rem; font-weight: 500; color: var(--text-dim); background: var(--surface-2); border: 1px solid var(--border); cursor: pointer; text-transform: none; letter-spacing: 0; transition: 0.2s; margin-bottom: 0; }
+    .radio-row label:hover { border-color: var(--accent); color: var(--text); }
+    .radio-row input[type="radio"] { accent-color: var(--accent); margin: 0; width: 14px; height: 14px; }
+    .stat-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+    .stat { padding: 10px; border-radius: var(--radius-sm); background: var(--surface-2); border: 1px solid var(--border); }
+    .stat .s-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 2px; }
+    .stat .s-value { font-family: var(--mono); font-size: 1.05rem; font-weight: 500; color: var(--text); }
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; }
+    .badge::before { content:''; width:6px; height:6px; border-radius:50%; }
+    .badge-pass { color: var(--green); background: var(--green-dim); border: 1px solid rgba(52,211,153,0.2); }
     .badge-pass::before { background: var(--green); }
-    .badge-fail {
-      color: var(--red);
-      background: var(--red-dim);
-      border: 1px solid rgba(248,113,113,0.2);
-    }
+    .badge-fail { color: var(--red); background: var(--red-dim); border: 1px solid rgba(248,113,113,0.2); }
     .badge-fail::before { background: var(--red); }
-
-    /* ── COMPONENT SECTION HEADERS ──────── */
-    .comp-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
-    }
-    .comp-head h3 {
-      font-size: 0.95rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
-    .comp-head .comp-sub {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    /* ── CENTER: VISUAL CONTAINER ───────── */
-    .visual-stage {
-      position: relative;
-    }
-    .container-viz {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px;
-      position: sticky;
-      top: 24px;
-    }
-    .container-viz h2 {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .container-viz .viz-sub {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-    .svg-container {
-      background: linear-gradient(180deg, var(--surface-2), var(--surface-3));
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 20px;
-      position: relative;
-    }
-    .svg-container svg {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* ── LEGEND ─────────────────────────── */
-    .legend {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 16px;
-      padding: 12px 16px;
-      background: var(--surface-2);
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-    }
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.82rem;
-      color: var(--text-dim);
-    }
-    .legend-swatch {
-      width: 14px; height: 14px;
-      border-radius: 4px;
-    }
-
-    /* ── REQUIREMENT CARDS ──────────────── */
-    .req-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-top: 16px;
-    }
-    .req-card {
-      padding: 12px;
-      border-radius: var(--radius-sm);
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      text-align: center;
-    }
-    .req-card .rc-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-    .req-card .rc-value {
-      font-family: var(--mono);
-      font-size: 1.1rem;
-      font-weight: 500;
-    }
-    .req-card .rc-sub {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    /* ── RIGHT SIDEBAR ─────────────────── */
-    .sidebar { }
-    .score-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-    .score-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 14px;
-      border-radius: var(--radius-sm);
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-    }
-    .score-row .sr-name {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    .score-row .sr-value {
-      font-family: var(--mono);
-      font-size: 0.88rem;
-      font-weight: 500;
-    }
-    .sr-pass { color: var(--green); }
-    .sr-fail { color: var(--red); }
-    .sr-pending { color: var(--text-muted); }
-
-    .info-box {
-      padding: 14px;
-      border-radius: var(--radius-sm);
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      margin-bottom: 14px;
-    }
-    .info-box h4 {
-      font-size: 0.82rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-    .info-box p, .info-box li {
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      line-height: 1.55;
-    }
-    .info-box ul {
-      padding-left: 16px;
-      margin: 6px 0 0;
-    }
-
-    /* ── NOTE OUTPUT ────────────────────── */
-    .note-section { margin-top: 16px; }
-    .note-toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-      flex-wrap: wrap;
-    }
-    .note-toolbar h4 {
-      font-size: 0.85rem;
-      font-weight: 700;
-    }
+    .comp-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+    .comp-head h3 { font-size: 0.95rem; font-weight: 700; }
+    .comp-head .comp-sub { font-size: 0.78rem; color: var(--text-muted); }
+    .visual-stage { position: relative; }
+    .container-viz { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; position: sticky; top: 24px; }
+    .container-viz h2 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .container-viz .viz-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
+    .svg-container { background: #f5f6f8; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; }
+    .svg-container svg { width: 100%; height: auto; display: block; }
+    .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; padding: 12px 16px; background: var(--surface-2); border-radius: var(--radius-sm); border: 1px solid var(--border); }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--text-dim); }
+    .legend-swatch { width: 16px; height: 16px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.08); }
+    .req-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 16px; }
+    .req-card { padding: 12px; border-radius: var(--radius-sm); background: var(--surface-2); border: 1px solid var(--border); text-align: center; }
+    .req-card .rc-label { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); margin-bottom:4px; }
+    .req-card .rc-value { font-family: var(--mono); font-size: 1.1rem; font-weight: 500; }
+    .req-card .rc-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+    .score-grid { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 14px; }
+    .score-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-radius: var(--radius-sm); background: var(--surface-2); border: 1px solid var(--border); }
+    .score-row .sr-name { font-size:0.82rem; font-weight:700; color:var(--text-dim); text-transform:uppercase; letter-spacing:0.06em; }
+    .score-row .sr-value { font-family: var(--mono); font-size: 0.88rem; font-weight: 500; }
+    .sr-pass { color: var(--green); } .sr-fail { color: var(--red); } .sr-pending { color: var(--text-muted); }
+    .info-box { padding: 14px; border-radius: var(--radius-sm); background: var(--surface-2); border: 1px solid var(--border); margin-bottom: 14px; }
+    .info-box h4 { font-size: 0.82rem; font-weight: 700; margin-bottom: 6px; }
+    .info-box p { font-size: 0.82rem; color: var(--text-dim); line-height: 1.55; }
+    .note-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
     .btn-group { display: flex; gap: 6px; }
-    .btn {
-      appearance: none;
-      font-family: var(--font);
-      font-size: 0.8rem;
-      font-weight: 700;
-      border: 1px solid var(--border-hi);
-      background: var(--surface-3);
-      color: var(--text);
-      border-radius: var(--radius-xs);
-      padding: 8px 14px;
-      cursor: pointer;
-      transition: 0.15s;
-    }
-    .btn:hover {
-      background: var(--accent-dim);
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: var(--bg);
-      border-color: var(--accent);
-    }
-    .btn-primary:hover {
-      background: #7dd3fc;
-      color: var(--bg);
-    }
-    .copy-status {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      min-height: 1em;
-    }
-    textarea.note-output {
-      width: 100%;
-      min-height: 280px;
-      resize: vertical;
-      font-family: var(--mono);
-      font-size: 0.82rem;
-      font-weight: 500;
-      line-height: 1.6;
-      color: var(--text);
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 14px;
-      outline: none;
-    }
-    textarea.note-output:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-dim);
-    }
-
-    /* ── FOOTER ─────────────────────────── */
-    .disclaimer-bar {
-      margin-top: 32px;
-      padding: 16px 20px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
+    .btn { appearance: none; font-family: var(--font); font-size: 0.8rem; font-weight: 700; border: 1px solid var(--border-hi); background: var(--surface-3); color: var(--text); border-radius: var(--radius-xs); padding: 8px 14px; cursor: pointer; transition: 0.15s; }
+    .btn:hover { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+    .btn-primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .btn-primary:hover { background: #7dd3fc; color: var(--bg); }
+    .copy-status { font-size: 0.78rem; color: var(--text-muted); min-height: 1em; }
+    textarea.note-output { width: 100%; min-height: 280px; resize: vertical; font-family: var(--mono); font-size: 0.82rem; font-weight: 500; line-height: 1.6; color: var(--text); background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; outline: none; }
+    textarea.note-output:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-dim); }
+    .disclaimer-bar { margin-top: 32px; padding: 16px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
     .disclaimer-bar strong { color: var(--text-dim); }
-
     .hidden { display: none !important; }
-
-    /* ── TRANSITIONS ────────────────────── */
-    .insulation-layer { transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
-
-    /* ── RESPONSIVE ─────────────────────── */
-    @media (max-width: 1100px) {
-      .app {
-        grid-template-columns: 1fr;
-      }
-      .visual-stage .container-viz { position: static; }
-      .left-col { order: 1; }
-      .visual-stage { order: 2; }
-      .sidebar { order: 3; }
-    }
-    @media (max-width: 600px) {
-      .shell { padding: 12px; }
-      .stat-pair, .req-row { grid-template-columns: 1fr; }
-      .radio-row { flex-direction: column; }
-      .note-toolbar { flex-direction: column; align-items: stretch; }
-    }
+    @media (max-width: 1100px) { .app { grid-template-columns: 1fr; } .visual-stage .container-viz { position: static; } .left-col { order: 1; } .visual-stage { order: 2; } .sidebar { order: 3; } }
+    @media (max-width: 600px) { .shell { padding: 12px; } .stat-pair, .req-row { grid-template-columns: 1fr; } .radio-row { flex-direction: column; } .note-toolbar { flex-direction: column; align-items: stretch; } }
   </style>
 </head>
 <body>
 <div class="shell">
 
-  <!-- HEADER -->
   <header class="site-header">
     <div class="brand">Oasis <span>Engineering</span></div>
     <div class="tag">IECC 2021</div>
   </header>
 
-  <!-- HERO -->
   <section class="hero">
     <h1>Container Insulation Planner</h1>
     <p>Select your location, configure insulation for each assembly, and watch the cross-section update in real time. Generated notes can be adapted for use in your project documentation.</p>
   </section>
 
-  <!-- MAIN 3-COLUMN GRID -->
   <div class="app">
 
     <!-- LEFT: INPUTS -->
     <div class="left-col">
-
-      <!-- Location -->
       <div class="panel">
-        <div class="panel-head">
-          <h2>Location</h2>
-          <p>State &amp; climate zone drive code requirements.</p>
-        </div>
+        <div class="panel-head"><h2>Location</h2><p>State &amp; climate zone drive code requirements.</p></div>
         <div class="panel-body">
-          <div class="field">
-            <label for="state">State</label>
-            <select id="state" onchange="updateClimateZones()">
-              <option value="">Select state…</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="climateZone">Climate Zone</label>
-            <select id="climateZone" onchange="displayRequiredRValues()">
-              <option value="">Select zone…</option>
-            </select>
-          </div>
+          <div class="field"><label for="state">State</label><select id="state" onchange="updateClimateZones()"><option value="">Select state…</option></select></div>
+          <div class="field"><label for="climateZone">Climate Zone</label><select id="climateZone" onchange="displayRequiredRValues()"><option value="">Select zone…</option></select></div>
         </div>
       </div>
 
-      <!-- Floor -->
-      <div class="panel">
-        <div class="panel-body">
-          <div class="comp-head">
-            <div>
-              <h3>Floor</h3>
-              <div class="comp-sub">Underfloor assembly</div>
-            </div>
-            <span id="floor-badge" class="badge badge-fail">Not compliant</span>
-          </div>
-          <div class="field">
-            <label for="floor-type">Insulation Type</label>
-            <select id="floor-type">
-              <option value="sprayFoam">Spray Foam (R-6 / in)</option>
-              <option value="batt">Batt (R-3.5 / in)</option>
-              <option value="polyiso">Polyiso (R-6 / in)</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="floor-thickness">Thickness (inches)</label>
-            <input type="number" id="floor-thickness" min="0" step="0.1" value="0" />
-          </div>
-          <div class="stat-pair">
-            <div class="stat"><div class="s-label">Provided</div><div class="s-value">R-<span id="floor-provided">0</span></div></div>
-            <div class="stat"><div class="s-label">Required</div><div class="s-value">R-<span id="floor-required-inline">—</span></div></div>
-          </div>
-        </div>
-      </div>
+      <div class="panel"><div class="panel-body">
+        <div class="comp-head"><div><h3>Floor</h3><div class="comp-sub">Underfloor assembly</div></div><span id="floor-badge" class="badge badge-fail">Not compliant</span></div>
+        <div class="field"><label for="floor-type">Insulation Type</label><select id="floor-type"><option value="sprayFoam">Spray Foam (R-6 / in)</option><option value="batt">Batt (R-3.5 / in)</option><option value="polyiso">Polyiso (R-6 / in)</option></select></div>
+        <div class="field"><label for="floor-thickness">Thickness (inches)</label><input type="number" id="floor-thickness" min="0" step="0.1" value="0" /></div>
+        <div class="stat-pair"><div class="stat"><div class="s-label">Provided</div><div class="s-value">R-<span id="floor-provided">0</span></div></div><div class="stat"><div class="s-label">Required</div><div class="s-value">R-<span id="floor-required-inline">—</span></div></div></div>
+      </div></div>
 
-      <!-- Ceiling -->
-      <div class="panel">
-        <div class="panel-body">
-          <div class="comp-head">
-            <div>
-              <h3>Ceiling</h3>
-              <div class="comp-sub">Roof / ceiling assembly</div>
-            </div>
-            <span id="ceiling-badge" class="badge badge-fail">Not compliant</span>
-          </div>
-          <div class="field">
-            <label for="ceiling-type">Insulation Type</label>
-            <select id="ceiling-type">
-              <option value="sprayFoam">Spray Foam (R-6 / in)</option>
-              <option value="batt">Batt (R-3.5 / in)</option>
-              <option value="polyiso">Polyiso (R-6 / in)</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="ceiling-thickness">Thickness (inches)</label>
-            <input type="number" id="ceiling-thickness" min="0" step="0.1" value="0" />
-          </div>
-          <div class="stat-pair">
-            <div class="stat"><div class="s-label">Provided</div><div class="s-value">R-<span id="ceiling-provided">0</span></div></div>
-            <div class="stat"><div class="s-label">Required</div><div class="s-value">R-<span id="ceiling-required-inline">—</span></div></div>
-          </div>
-        </div>
-      </div>
+      <div class="panel"><div class="panel-body">
+        <div class="comp-head"><div><h3>Ceiling</h3><div class="comp-sub">Roof / ceiling assembly</div></div><span id="ceiling-badge" class="badge badge-fail">Not compliant</span></div>
+        <div class="field"><label for="ceiling-type">Insulation Type</label><select id="ceiling-type"><option value="sprayFoam">Spray Foam (R-6 / in)</option><option value="batt">Batt (R-3.5 / in)</option><option value="polyiso">Polyiso (R-6 / in)</option></select></div>
+        <div class="field"><label for="ceiling-thickness">Thickness (inches)</label><input type="number" id="ceiling-thickness" min="0" step="0.1" value="0" /></div>
+        <div class="stat-pair"><div class="stat"><div class="s-label">Provided</div><div class="s-value">R-<span id="ceiling-provided">0</span></div></div><div class="stat"><div class="s-label">Required</div><div class="s-value">R-<span id="ceiling-required-inline">—</span></div></div></div>
+      </div></div>
 
-      <!-- Walls -->
-      <div class="panel">
-        <div class="panel-body">
-          <div class="comp-head">
-            <div>
-              <h3>Walls</h3>
-              <div class="comp-sub">Container sidewall assembly</div>
-            </div>
-            <span id="wall-badge" class="badge badge-fail">Not compliant</span>
-          </div>
-          <div class="field">
-            <div class="field-legend">Configuration</div>
-            <div class="radio-row">
-              <label><input type="radio" name="wall-config" value="cavityOnly" checked onclick="toggleWallInputs()"> Cavity Only</label>
-              <label><input type="radio" name="wall-config" value="cavityContinuous" onclick="toggleWallInputs()"> Cavity + Continuous</label>
-            </div>
-          </div>
-          <div class="field">
-            <div class="field-legend">Location</div>
-            <div class="radio-row">
-              <label><input type="radio" name="wall-location" value="inside" checked onclick="updateWallRValue()"> Inside</label>
-              <label><input type="radio" name="wall-location" value="outside" onclick="updateWallRValue()"> Outside</label>
-            </div>
-          </div>
-          <div id="wall-cavity-inputs">
-            <div class="field">
-              <label for="wall-cavity-type">Cavity Type</label>
-              <select id="wall-cavity-type">
-                <option value="sprayFoam">Spray Foam (R-6 / in)</option>
-                <option value="batt">Batt (R-3.5 / in)</option>
-                <option value="polyiso">Polyiso (R-6 / in)</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="wall-cavity-thickness">Cavity Thickness (in)</label>
-              <input type="number" id="wall-cavity-thickness" min="0" step="0.1" value="0" />
-            </div>
-          </div>
-          <div id="wall-continuous-inputs" class="hidden">
-            <div class="field">
-              <label for="wall-continuous-type">Continuous Type</label>
-              <select id="wall-continuous-type">
-                <option value="sprayFoam">Spray Foam (R-6 / in)</option>
-                <option value="batt">Batt (R-3.5 / in)</option>
-                <option value="polyiso">Polyiso (R-6 / in)</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="wall-continuous-thickness">Continuous Thickness (in)</label>
-              <input type="number" id="wall-continuous-thickness" min="0" step="0.1" value="0" />
-            </div>
-          </div>
-          <div class="stat-pair">
-            <div class="stat"><div class="s-label">Provided</div><div class="s-value" id="wall-provided" style="font-size:0.88rem">Cav R-0 · Cont R-0</div></div>
-            <div class="stat"><div class="s-label">Required</div><div class="s-value">R-<span id="wall-required-inline">—</span></div></div>
-          </div>
+      <div class="panel"><div class="panel-body">
+        <div class="comp-head"><div><h3>Walls</h3><div class="comp-sub">Container sidewall assembly</div></div><span id="wall-badge" class="badge badge-fail">Not compliant</span></div>
+        <div class="field"><div class="field-legend">Configuration</div><div class="radio-row"><label><input type="radio" name="wall-config" value="cavityOnly" checked onclick="toggleWallInputs()"> Cavity Only</label><label><input type="radio" name="wall-config" value="cavityContinuous" onclick="toggleWallInputs()"> Cavity + Continuous</label></div></div>
+        <div class="field"><div class="field-legend">Location</div><div class="radio-row"><label><input type="radio" name="wall-location" value="inside" checked onclick="updateWallRValue()"> Inside</label><label><input type="radio" name="wall-location" value="outside" onclick="updateWallRValue()"> Outside</label></div></div>
+        <div id="wall-cavity-inputs">
+          <div class="field"><label for="wall-cavity-type">Cavity Type</label><select id="wall-cavity-type"><option value="sprayFoam">Spray Foam (R-6 / in)</option><option value="batt">Batt (R-3.5 / in)</option><option value="polyiso">Polyiso (R-6 / in)</option></select></div>
+          <div class="field"><label for="wall-cavity-thickness">Cavity Thickness (in)</label><input type="number" id="wall-cavity-thickness" min="0" step="0.1" value="0" /></div>
         </div>
-      </div>
+        <div id="wall-continuous-inputs" class="hidden">
+          <div class="field"><label for="wall-continuous-type">Continuous Type</label><select id="wall-continuous-type"><option value="sprayFoam">Spray Foam (R-6 / in)</option><option value="batt">Batt (R-3.5 / in)</option><option value="polyiso">Polyiso (R-6 / in)</option></select></div>
+          <div class="field"><label for="wall-continuous-thickness">Continuous Thickness (in)</label><input type="number" id="wall-continuous-thickness" min="0" step="0.1" value="0" /></div>
+        </div>
+        <div class="stat-pair"><div class="stat"><div class="s-label">Provided</div><div class="s-value" id="wall-provided" style="font-size:0.88rem">Cav R-0 · Cont R-0</div></div><div class="stat"><div class="s-label">Required</div><div class="s-value">R-<span id="wall-required-inline">—</span></div></div></div>
+      </div></div>
     </div>
 
-    <!-- CENTER: LIVE CROSS-SECTION -->
+    <!-- CENTER: CROSS-SECTION -->
     <div class="visual-stage">
       <div class="container-viz">
         <h2>Live Cross-Section</h2>
-        <p class="viz-sub">Insulation layers update as you adjust inputs on the left.</p>
+        <p class="viz-sub">Insulation layers animate as you adjust inputs. Annotations show R-values on the drawing.</p>
+        <div class="svg-container" id="svg-wrap"></div>
 
-        <div class="svg-container">
-          <svg id="main-svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid meet">
-            <defs>
-              <!-- Steel gradient -->
-              <linearGradient id="steelG" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#8394aa"/>
-                <stop offset="100%" stop-color="#5b6b82"/>
-              </linearGradient>
-              <!-- Corrugation pattern -->
-              <pattern id="corrV" patternUnits="userSpaceOnUse" width="14" height="200">
-                <path d="M0 0Q3.5 6,7 0Q10.5 -6,14 0" fill="none" stroke="#6b7d96" stroke-width="0.6" transform="translate(0,1)"/>
-                <path d="M0 0Q3.5 6,7 0Q10.5 -6,14 0" fill="none" stroke="#6b7d96" stroke-width="0.6" transform="translate(0,15)"/>
-                <path d="M0 0Q3.5 6,7 0Q10.5 -6,14 0" fill="none" stroke="#6b7d96" stroke-width="0.6" transform="translate(0,29)"/>
-                <path d="M0 0Q3.5 6,7 0Q10.5 -6,14 0" fill="none" stroke="#6b7d96" stroke-width="0.6" transform="translate(0,43)"/>
-                <path d="M0 0Q3.5 6,7 0Q10.5 -6,14 0" fill="none" stroke="#6b7d96" stroke-width="0.6" transform="translate(0,57)"/>
-                <path d="M0 0Q3.5 6,7 0Q10.5 -6,14 0" fill="none" stroke="#6b7d96" stroke-width="0.6" transform="translate(0,71)"/>
-                <path d="M0 0Q3.5 6,7 0Q10.5 -6,14 0" fill="none" stroke="#6b7d96" stroke-width="0.6" transform="translate(0,85)"/>
-                <path d="M0 0Q3.5 6,7 0Q10.5 -6,14 0" fill="none" stroke="#6b7d96" stroke-width="0.6" transform="translate(0,99)"/>
-              </pattern>
-              <pattern id="corrH" patternUnits="userSpaceOnUse" width="600" height="12">
-                <path d="M0 6Q6 0,12 6Q18 12,24 6Q30 0,36 6Q42 12,48 6" fill="none" stroke="#6b7d96" stroke-width="0.6" />
-              </pattern>
-              <!-- Insulation type fills -->
-              <pattern id="patt-sprayFoam" patternUnits="userSpaceOnUse" width="20" height="20">
-                <rect width="20" height="20" fill="#38bdf8" opacity="0.25"/>
-                <circle cx="4" cy="4" r="2" fill="#38bdf8" opacity="0.35"/>
-                <circle cx="14" cy="12" r="1.5" fill="#38bdf8" opacity="0.3"/>
-                <circle cx="8" cy="17" r="1" fill="#7dd3fc" opacity="0.3"/>
-                <circle cx="17" cy="5" r="1.2" fill="#7dd3fc" opacity="0.25"/>
-              </pattern>
-              <pattern id="patt-batt" patternUnits="userSpaceOnUse" width="16" height="16">
-                <rect width="16" height="16" fill="#f59e0b" opacity="0.2"/>
-                <path d="M0 8 Q4 4, 8 8 Q12 12, 16 8" fill="none" stroke="#f59e0b" stroke-width="0.8" opacity="0.4"/>
-                <path d="M0 4 Q4 0, 8 4 Q12 8, 16 4" fill="none" stroke="#fbbf24" stroke-width="0.5" opacity="0.25"/>
-              </pattern>
-              <pattern id="patt-polyiso" patternUnits="userSpaceOnUse" width="12" height="12">
-                <rect width="12" height="12" fill="#a78bfa" opacity="0.2"/>
-                <rect x="1" y="1" width="10" height="10" fill="none" stroke="#a78bfa" stroke-width="0.5" opacity="0.35" rx="1"/>
-                <rect x="3" y="3" width="6" height="6" fill="none" stroke="#c4b5fd" stroke-width="0.4" opacity="0.25" rx="1"/>
-              </pattern>
-            </defs>
-
-            <!-- Labels -->
-            <text x="300" y="22" text-anchor="middle" fill="#475569" font-size="11" font-weight="700" letter-spacing="0.1em">CROSS-SECTION VIEW</text>
-
-            <!-- ROOF STEEL (top plate) -->
-            <rect x="60" y="50" width="480" height="14" fill="url(#steelG)" rx="3"/>
-            <rect x="60" y="50" width="480" height="14" fill="url(#corrH)" opacity="0.5"/>
-
-            <!-- LEFT WALL STEEL -->
-            <rect x="60" y="50" width="16" height="280" fill="url(#steelG)" rx="2"/>
-            <rect x="60" y="50" width="16" height="280" fill="url(#corrV)" opacity="0.4"/>
-
-            <!-- RIGHT WALL STEEL -->
-            <rect x="524" y="50" width="16" height="280" fill="url(#steelG)" rx="2"/>
-            <rect x="524" y="50" width="16" height="280" fill="url(#corrV)" opacity="0.4"/>
-
-            <!-- FLOOR STEEL (bottom plate) -->
-            <rect x="60" y="316" width="480" height="14" fill="url(#steelG)" rx="3"/>
-            <rect x="60" y="316" width="480" height="14" fill="url(#corrH)" opacity="0.5"/>
-
-            <!-- Floor runners / ground -->
-            <rect x="60" y="330" width="480" height="26" fill="#3a4558" rx="4" opacity="0.5"/>
-            <text x="300" y="348" text-anchor="middle" fill="#64748b" font-size="9" letter-spacing="0.08em">GROUND</text>
-
-            <!-- CEILING INSULATION (grows downward from roof) -->
-            <rect id="viz-ceiling-ins" class="insulation-layer"
-              x="76" y="64" width="448" height="0" rx="2"/>
-
-            <!-- FLOOR INSULATION (grows upward from floor) -->
-            <rect id="viz-floor-ins" class="insulation-layer"
-              x="76" y="316" width="448" height="0" rx="2"/>
-
-            <!-- LEFT WALL INSULATION INSIDE -->
-            <rect id="viz-lwall-inside" class="insulation-layer"
-              x="76" y="64" width="0" height="252" rx="2"/>
-            <!-- LEFT WALL INSULATION OUTSIDE -->
-            <rect id="viz-lwall-outside" class="insulation-layer"
-              x="60" y="64" width="0" height="252" rx="2"/>
-
-            <!-- RIGHT WALL INSULATION INSIDE -->
-            <rect id="viz-rwall-inside" class="insulation-layer"
-              x="524" y="64" width="0" height="252" rx="2"/>
-            <!-- RIGHT WALL INSULATION OUTSIDE -->
-            <rect id="viz-rwall-outside" class="insulation-layer"
-              x="540" y="64" width="0" height="252" rx="2"/>
-
-            <!-- Interior label -->
-            <text x="300" y="205" text-anchor="middle" fill="#334155" font-size="13" font-weight="500" opacity="0.6">INTERIOR SPACE</text>
-
-            <!-- Dimension annotations -->
-            <line x1="76" y1="385" x2="524" y2="385" stroke="#475569" stroke-width="0.5" stroke-dasharray="3,3"/>
-            <text x="300" y="396" text-anchor="middle" fill="#475569" font-size="9">~19′-4″ (HIGH-CUBE 40′ CONTAINER INTERIOR)</text>
-          </svg>
-        </div>
-
-        <!-- Legend -->
         <div class="legend">
-          <div class="legend-item">
-            <div class="legend-swatch" style="background:#5b6b82"></div>
-            Steel Shell
-          </div>
-          <div class="legend-item">
-            <div class="legend-swatch" style="background:#38bdf8"></div>
-            Spray Foam
-          </div>
-          <div class="legend-item">
-            <div class="legend-swatch" style="background:#f59e0b"></div>
-            Batt
-          </div>
-          <div class="legend-item">
-            <div class="legend-swatch" style="background:#a78bfa"></div>
-            Polyiso
-          </div>
+          <div class="legend-item"><div class="legend-swatch" style="background:#7a8da5"></div>Steel Shell</div>
+          <div class="legend-item"><div class="legend-swatch" style="background:#1a9fd4"></div>Spray Foam</div>
+          <div class="legend-item"><div class="legend-swatch" style="background:#d4910a"></div>Batt</div>
+          <div class="legend-item"><div class="legend-swatch" style="background:#7c4ddb"></div>Polyiso</div>
+          <div class="legend-item"><div class="legend-swatch" style="background:#556677"></div>Corner Casting</div>
         </div>
 
-        <!-- Required R-Values row -->
         <div id="req-row-wrap" class="hidden">
           <div class="req-row">
-            <div class="req-card">
-              <div class="rc-label">Ceiling</div>
-              <div class="rc-value">R-<span id="req-ceiling"></span></div>
-              <div class="rc-sub">Required</div>
-            </div>
-            <div class="req-card">
-              <div class="rc-label">Walls</div>
-              <div class="rc-value">R-<span id="req-walls"></span></div>
-              <div class="rc-sub">Prescriptive</div>
-            </div>
-            <div class="req-card">
-              <div class="rc-label">Floor</div>
-              <div class="rc-value">R-<span id="req-floor"></span></div>
-              <div class="rc-sub">Required</div>
-            </div>
+            <div class="req-card"><div class="rc-label">Ceiling</div><div class="rc-value">R-<span id="req-ceiling"></span></div><div class="rc-sub">Required</div></div>
+            <div class="req-card"><div class="rc-label">Walls</div><div class="rc-value">R-<span id="req-walls"></span></div><div class="rc-sub">Prescriptive</div></div>
+            <div class="req-card"><div class="rc-label">Floor</div><div class="rc-value">R-<span id="req-floor"></span></div><div class="rc-sub">Required</div></div>
           </div>
         </div>
       </div>
@@ -842,452 +180,455 @@
 
     <!-- RIGHT: SUMMARY + NOTES -->
     <div class="sidebar">
-
       <div class="panel">
-        <div class="panel-head">
-          <h2>Compliance Status</h2>
-          <p>Real-time pass/fail for each assembly.</p>
-        </div>
+        <div class="panel-head"><h2>Compliance Status</h2><p>Real-time pass/fail for each assembly.</p></div>
         <div class="panel-body">
           <div class="score-grid">
-            <div class="score-row">
-              <span class="sr-name">Floor</span>
-              <span class="sr-value sr-pending" id="score-floor">Pending</span>
-            </div>
-            <div class="score-row">
-              <span class="sr-name">Ceiling</span>
-              <span class="sr-value sr-pending" id="score-ceiling">Pending</span>
-            </div>
-            <div class="score-row">
-              <span class="sr-name">Walls</span>
-              <span class="sr-value sr-pending" id="score-walls">Pending</span>
-            </div>
+            <div class="score-row"><span class="sr-name">Floor</span><span class="sr-value sr-pending" id="score-floor">Pending</span></div>
+            <div class="score-row"><span class="sr-name">Ceiling</span><span class="sr-value sr-pending" id="score-ceiling">Pending</span></div>
+            <div class="score-row"><span class="sr-name">Walls</span><span class="sr-value sr-pending" id="score-walls">Pending</span></div>
           </div>
-          <div class="info-box">
-            <h4>Selected Basis</h4>
-            <p><strong>State:</strong> <span id="summary-state">—</span><br><strong>Zone:</strong> <span id="summary-zone">—</span></p>
-          </div>
-          <div class="info-box">
-            <h4>About the Example Note</h4>
-            <p>The generated note below is a sample format you can adapt for your own project documentation. Verify all values against local code requirements before use.</p>
-          </div>
+          <div class="info-box"><h4>Selected Basis</h4><p><strong>State:</strong> <span id="summary-state">—</span><br><strong>Zone:</strong> <span id="summary-zone">—</span></p></div>
+          <div class="info-box"><h4>About the Example Note</h4><p>The generated note below is a sample format you can adapt for your own project documentation. Verify all values against local code requirements before use.</p></div>
         </div>
       </div>
-
       <div class="panel">
-        <div class="panel-head">
-          <h2>Example Requirements Note</h2>
-          <p>Sample note format for plan-sheet reference.</p>
-        </div>
+        <div class="panel-head"><h2>Example Requirements Note</h2><p>Sample note format for plan-sheet reference.</p></div>
         <div class="panel-body">
           <div class="note-toolbar">
             <div class="copy-status" id="copy-status">Updates live with your selections.</div>
-            <div class="btn-group">
-              <button class="btn btn-primary" type="button" onclick="copyExampleNote()">Copy</button>
-              <button class="btn" type="button" onclick="selectExampleNote()">Select</button>
-            </div>
+            <div class="btn-group"><button class="btn btn-primary" type="button" onclick="copyExampleNote()">Copy</button><button class="btn" type="button" onclick="selectExampleNote()">Select</button></div>
           </div>
           <textarea class="note-output" id="example-note-output" spellcheck="false"></textarea>
         </div>
       </div>
     </div>
 
-  </div><!-- /app -->
+  </div>
 
-  <!-- DISCLAIMER -->
   <div class="disclaimer-bar">
     <strong>Disclaimer:</strong> This tool provides estimates based on IECC 2021 prescriptive R-values and is not a substitute for professional advice. Requirements may vary by jurisdiction, adoption cycle, and site conditions. Verify against applicable code, local amendments, and final design documents. Oasis Engineering assumes no liability for any use of this tool.
   </div>
 
-</div><!-- /shell -->
+</div>
 
 <script>
-  /* ══════════════════════════════════════
-     DATA
-     ══════════════════════════════════════ */
-  const states = [
-    {name:"Alabama",code:"AL"},{name:"Alaska",code:"AK"},{name:"Arizona",code:"AZ"},
-    {name:"Arkansas",code:"AR"},{name:"California",code:"CA"},{name:"Colorado",code:"CO"},
-    {name:"Connecticut",code:"CT"},{name:"Delaware",code:"DE"},{name:"Florida",code:"FL"},
-    {name:"Georgia",code:"GA"},{name:"Hawaii",code:"HI"},{name:"Idaho",code:"ID"},
-    {name:"Illinois",code:"IL"},{name:"Indiana",code:"IN"},{name:"Iowa",code:"IA"},
-    {name:"Kansas",code:"KS"},{name:"Kentucky",code:"KY"},{name:"Louisiana",code:"LA"},
-    {name:"Maine",code:"ME"},{name:"Maryland",code:"MD"},{name:"Massachusetts",code:"MA"},
-    {name:"Michigan",code:"MI"},{name:"Minnesota",code:"MN"},{name:"Mississippi",code:"MS"},
-    {name:"Missouri",code:"MO"},{name:"Montana",code:"MT"},{name:"Nebraska",code:"NE"},
-    {name:"Nevada",code:"NV"},{name:"New Hampshire",code:"NH"},{name:"New Jersey",code:"NJ"},
-    {name:"New Mexico",code:"NM"},{name:"New York",code:"NY"},{name:"North Carolina",code:"NC"},
-    {name:"North Dakota",code:"ND"},{name:"Ohio",code:"OH"},{name:"Oklahoma",code:"OK"},
-    {name:"Oregon",code:"OR"},{name:"Pennsylvania",code:"PA"},{name:"Rhode Island",code:"RI"},
-    {name:"South Carolina",code:"SC"},{name:"South Dakota",code:"SD"},{name:"Tennessee",code:"TN"},
-    {name:"Texas",code:"TX"},{name:"Utah",code:"UT"},{name:"Vermont",code:"VT"},
-    {name:"Virginia",code:"VA"},{name:"Washington",code:"WA"},{name:"West Virginia",code:"WV"},
-    {name:"Wisconsin",code:"WI"},{name:"Wyoming",code:"WY"}
-  ];
+/* ══════════════════════════════════════════════════════════════
+   BUILD SVG PROGRAMMATICALLY
+   ══════════════════════════════════════════════════════════════ */
+(function buildSVG(){
+  const NS = 'http://www.w3.org/2000/svg';
+  const W = 660, H = 480;
 
-  const stateClimateZones = {
-    "AL":["3A"],"AK":["7","8"],"AZ":["2B","3B","4B","5B"],"AR":["3A","4A"],
-    "CA":["2B","3B","3C","4B","5B","6B"],"CO":["4B","5B","6B","7"],"CT":["5A"],
-    "DE":["4A"],"FL":["1A","2A"],"GA":["2A","3A","4A"],"HI":["1A"],"ID":["5B","6B"],
-    "IL":["4A","5A"],"IN":["4A","5A"],"IA":["5A","6A"],"KS":["4A","4B","5A"],
-    "KY":["4A","5A"],"LA":["2A","3A"],"ME":["6A"],"MD":["4A"],"MA":["5A"],
-    "MI":["5A","6A"],"MN":["6A","7"],"MS":["3A"],"MO":["4A","5A"],"MT":["5B","6B","7"],
-    "NE":["5A","5B"],"NV":["3B","4B","5B"],"NH":["6A"],"NJ":["4A"],"NM":["3B","4B","5B"],
-    "NY":["4A","5A","6A"],"NC":["3A","4A"],"ND":["6A","7"],"OH":["5A"],"OK":["3A","3B","4A"],
-    "OR":["4C","5B","6B"],"PA":["4A","5A"],"RI":["5A"],"SC":["3A"],"SD":["5A","6A"],
-    "TN":["3A","4A"],"TX":["2A","2B","3A","3B","4A","4B"],"UT":["3B","4B","5B","6B"],
-    "VT":["6A"],"VA":["4A"],"WA":["4C","5B","6B"],"WV":["4A","5A"],"WI":["6A","7"],
-    "WY":["5B","6B","7"]
-  };
+  // Container geometry
+  const CX = 80, CY = 60;          // container top-left
+  const CW = 500, CH = 340;         // container outer size
+  const STEEL = 8;                   // wall/plate thickness
+  const CORR = 16;                   // corrugation depth (wall panels)
+  const ROOF_CORR = 14;             // roof corrugation depth
+  const FLOOR_STRUCT = 22;          // floor structural depth
 
-  const rValuesByZone = {
-    "1":{ceiling:"30",wall:"13",floor:"13"},
-    "1A":{ceiling:"30",wall:"13",floor:"13"},
-    "2":{ceiling:"38",wall:"13",floor:"13"},
-    "2A":{ceiling:"38",wall:"13",floor:"13"},
-    "2B":{ceiling:"38",wall:"13",floor:"13"},
-    "3":{ceiling:"38",wall:"20 or 13+5",floor:"19"},
-    "3A":{ceiling:"38",wall:"20 or 13+5",floor:"19"},
-    "3B":{ceiling:"38",wall:"20 or 13+5",floor:"19"},
-    "3C":{ceiling:"38",wall:"20 or 13+5",floor:"19"},
-    "4":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"19"},
-    "4A":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"19"},
-    "4B":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"19"},
-    "4C":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"19"},
-    "5":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"},
-    "5A":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"},
-    "5B":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"},
-    "6":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"},
-    "6A":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"},
-    "6B":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"},
-    "7":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"},
-    "8":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"}
-  };
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
 
-  const insulationRValues = { sprayFoam: 6, batt: 3.5, polyiso: 6 };
+  // Helper
+  function el(tag, attrs) {
+    const e = document.createElementNS(NS, tag);
+    for (const [k,v] of Object.entries(attrs)) e.setAttribute(k, v);
+    return e;
+  }
+  function txt(x, y, text, attrs={}) {
+    const t = el('text', {x, y, 'text-anchor': attrs.anchor||'middle', fill: attrs.fill||'#64748b',
+      'font-family': 'DM Sans, sans-serif', 'font-size': attrs.size||'9', 'font-weight': attrs.weight||'600',
+      'letter-spacing': attrs.ls||'0.06em', ...attrs});
+    t.textContent = text;
+    return t;
+  }
 
-  const insColorMap = {
-    sprayFoam: 'url(#patt-sprayFoam)',
-    batt: 'url(#patt-batt)',
-    polyiso: 'url(#patt-polyiso)'
-  };
-  const insSolidMap = {
-    sprayFoam: 'rgba(56,189,248,0.35)',
-    batt: 'rgba(245,158,11,0.3)',
-    polyiso: 'rgba(167,139,250,0.3)'
-  };
+  // ── DEFS ──
+  const defs = el('defs', {});
 
-  /* ══════════════════════════════════════
-     INIT
-     ══════════════════════════════════════ */
-  const stateSelect = document.getElementById('state');
-  states.forEach(s => {
-    const o = document.createElement('option');
-    o.value = s.code; o.textContent = s.name;
-    stateSelect.appendChild(o);
+  // Steel section hatch
+  const steelH = el('pattern', {id:'steelHatch', patternUnits:'userSpaceOnUse', width:'5', height:'5', patternTransform:'rotate(45)'});
+  steelH.appendChild(el('line', {x1:'0', y1:'0', x2:'0', y2:'5', stroke:'#555e6e', 'stroke-width':'0.7'}));
+  defs.appendChild(steelH);
+
+  // Spray foam pattern (stipple)
+  const pSF = el('pattern', {id:'hatch-sprayFoam', patternUnits:'userSpaceOnUse', width:'10', height:'10'});
+  pSF.appendChild(el('rect', {width:'10', height:'10', fill:'#1a9fd4'}));
+  [[2,2,1.2],[7,5,1],[4,8,0.8],[9,1,0.7],[5,4,0.6],[1,6,0.5],[8,9,0.9]].forEach(([cx,cy,r]) => {
+    pSF.appendChild(el('circle', {cx, cy, r, fill:'#5ecbf5', opacity:'0.65'}));
+  });
+  defs.appendChild(pSF);
+
+  // Batt pattern (zigzag)
+  const pB = el('pattern', {id:'hatch-batt', patternUnits:'userSpaceOnUse', width:'12', height:'10'});
+  pB.appendChild(el('rect', {width:'12', height:'10', fill:'#c98a08'}));
+  pB.appendChild(el('path', {d:'M0,5 L3,0 L6,5 L9,0 L12,5', fill:'none', stroke:'#f5c842', 'stroke-width':'1.3'}));
+  pB.appendChild(el('path', {d:'M0,10 L3,5 L6,10 L9,5 L12,10', fill:'none', stroke:'#f5c842', 'stroke-width':'1.3'}));
+  defs.appendChild(pB);
+
+  // Polyiso pattern (cross-hatch)
+  const pP = el('pattern', {id:'hatch-polyiso', patternUnits:'userSpaceOnUse', width:'8', height:'8'});
+  pP.appendChild(el('rect', {width:'8', height:'8', fill:'#6d3fc4'}));
+  pP.appendChild(el('line', {x1:'0', y1:'0', x2:'8', y2:'8', stroke:'#a070e8', 'stroke-width':'1.0'}));
+  pP.appendChild(el('line', {x1:'8', y1:'0', x2:'0', y2:'8', stroke:'#9060d8', 'stroke-width':'0.7'}));
+  defs.appendChild(pP);
+
+  svg.appendChild(defs);
+
+  // ── BG ──
+  svg.appendChild(el('rect', {width:W, height:H, fill:'#f5f6f8', rx:'0'}));
+
+  // Title
+  svg.appendChild(txt(W/2, 28, 'CONTAINER CROSS-SECTION', {size:'10.5', weight:'700', ls:'0.14em', fill:'#6b7d96'}));
+
+  // ═══ STRUCTURAL STEEL ═══
+  const steelColor = '#7a8da5';
+  const steelDark = '#6b7d96';
+  const castColor = '#556677';
+
+  // Roof: top plate
+  const roofTopY = CY;
+  svg.appendChild(el('rect', {x:CX, y:roofTopY, width:CW, height:STEEL, fill:steelDark, rx:'1'}));
+  svg.appendChild(el('rect', {x:CX, y:roofTopY, width:CW, height:STEEL, fill:'url(#steelHatch)', opacity:'0.3'}));
+
+  // Roof corrugated panel
+  const roofCorrY = roofTopY + STEEL;
+  svg.appendChild(el('rect', {x:CX, y:roofCorrY, width:CW, height:ROOF_CORR, fill:steelColor}));
+  // Wave lines
+  const roofWaves = el('g', {stroke:steelDark, 'stroke-width':'0.5', fill:'none'});
+  for (let wy = 3; wy < ROOF_CORR; wy += 5) {
+    let d = `M${CX},${roofCorrY+wy}`;
+    for (let wx = CX; wx < CX+CW; wx += 24) {
+      d += ` Q${wx+6},${roofCorrY+wy-3} ${wx+12},${roofCorrY+wy} Q${wx+18},${roofCorrY+wy+3} ${wx+24},${roofCorrY+wy}`;
+    }
+    roofWaves.appendChild(el('path', {d}));
+  }
+  svg.appendChild(roofWaves);
+
+  // Roof bottom plate
+  const roofBotY = roofCorrY + ROOF_CORR;
+  svg.appendChild(el('rect', {x:CX, y:roofBotY, width:CW, height:4, fill:steelColor}));
+
+  // Interior top = roofBotY + 4
+  const intTop = roofBotY + 4;
+
+  // ═══ LEFT WALL ═══
+  // Outer corrugated panel
+  const lwOuter = CX;
+  svg.appendChild(el('rect', {x:lwOuter, y:CY, width:CORR, height:CH, fill:steelColor}));
+  // Corrugation lines (vertical trapezoidal ridges)
+  const lwCorr = el('g', {stroke:steelDark, 'stroke-width':'0.6', fill:'none'});
+  for (let ry = CY; ry < CY+CH; ry += 20) {
+    lwCorr.appendChild(el('path', {d:`M${lwOuter+4},${ry} L${lwOuter+4},${Math.min(ry+20, CY+CH)}`}));
+    lwCorr.appendChild(el('path', {d:`M${lwOuter+10},${ry} L${lwOuter+10},${Math.min(ry+20, CY+CH)}`}));
+  }
+  svg.appendChild(lwCorr);
+  // Inner plate
+  const lwInner = lwOuter + CORR;
+  svg.appendChild(el('rect', {x:lwInner, y:intTop, width:4, height:0, fill:steelColor, id:'lw-inner-plate'}));
+
+  // ═══ RIGHT WALL ═══
+  const rwInner = CX + CW - CORR - 4;
+  svg.appendChild(el('rect', {x:rwInner, y:intTop, width:4, height:0, fill:steelColor, id:'rw-inner-plate'}));
+  // Outer corrugated panel
+  const rwOuter = CX + CW - CORR;
+  svg.appendChild(el('rect', {x:rwOuter, y:CY, width:CORR, height:CH, fill:steelColor}));
+  const rwCorr = el('g', {stroke:steelDark, 'stroke-width':'0.6', fill:'none'});
+  for (let ry = CY; ry < CY+CH; ry += 20) {
+    rwCorr.appendChild(el('path', {d:`M${rwOuter+6},${ry} L${rwOuter+6},${Math.min(ry+20, CY+CH)}`}));
+    rwCorr.appendChild(el('path', {d:`M${rwOuter+12},${ry} L${rwOuter+12},${Math.min(ry+20, CY+CH)}`}));
+  }
+  svg.appendChild(rwCorr);
+
+  // ═══ FLOOR ═══
+  const floorTopY = CY + CH - FLOOR_STRUCT - STEEL;
+  // Floor top plate
+  svg.appendChild(el('rect', {x:CX, y:floorTopY, width:CW, height:4, fill:steelColor}));
+  // Interior bottom
+  const intBot = floorTopY;
+
+  // Set wall inner plates height
+  const wallH = intBot - intTop;
+  document.getElementById('lw-inner-plate')?.remove(); // we'll redraw
+  svg.appendChild(el('rect', {x:lwInner, y:intTop, width:4, height:wallH, fill:steelColor}));
+  svg.appendChild(el('rect', {x:lwInner, y:intTop, width:4, height:wallH, fill:'url(#steelHatch)', opacity:'0.2'}));
+  svg.appendChild(el('rect', {x:rwInner, y:intTop, width:4, height:wallH, fill:steelColor}));
+  svg.appendChild(el('rect', {x:rwInner, y:intTop, width:4, height:wallH, fill:'url(#steelHatch)', opacity:'0.2'}));
+
+  // Floor structure (C-channels)
+  const flStrY = floorTopY + 4;
+  svg.appendChild(el('rect', {x:CX, y:flStrY, width:CW, height:FLOOR_STRUCT, fill:'#8494a7'}));
+  svg.appendChild(el('rect', {x:CX, y:flStrY, width:CW, height:FLOOR_STRUCT, fill:'url(#steelHatch)', opacity:'0.15'}));
+  // Cross beam lines
+  const beamG = el('g', {stroke:'#6b7d96', 'stroke-width':'0.7'});
+  for (let bx = CX + 60; bx < CX + CW; bx += 70) {
+    beamG.appendChild(el('line', {x1:bx, y1:flStrY, x2:bx, y2:flStrY+FLOOR_STRUCT}));
+  }
+  svg.appendChild(beamG);
+
+  // Floor bottom plate
+  const flBotY = flStrY + FLOOR_STRUCT;
+  svg.appendChild(el('rect', {x:CX, y:flBotY, width:CW, height:STEEL, fill:steelDark, rx:'1'}));
+  svg.appendChild(el('rect', {x:CX, y:flBotY, width:CW, height:STEEL, fill:'url(#steelHatch)', opacity:'0.3'}));
+
+  // ═══ CORNER CASTINGS ═══
+  [[CX-6, CY-6],[CX+CW-12, CY-6],[CX-6, flBotY-2],[CX+CW-12, flBotY-2]].forEach(([cx,cy]) => {
+    svg.appendChild(el('rect', {x:cx, y:cy, width:18, height:18, fill:castColor, stroke:'#445566', 'stroke-width':'1', rx:'2'}));
+    svg.appendChild(el('rect', {x:cx+4, y:cy+4, width:10, height:10, fill:'none', stroke:'#445566', 'stroke-width':'0.5', rx:'1'}));
   });
 
-  /* ══════════════════════════════════════
-     STATE / ZONE
-     ══════════════════════════════════════ */
-  function updateClimateZones() {
-    const st = stateSelect.value;
-    const zones = stateClimateZones[st] || [];
-    const czSel = document.getElementById('climateZone');
-    czSel.innerHTML = '<option value="">Select zone…</option>';
-    zones.forEach(z => {
-      const o = document.createElement('option');
-      o.value = z; o.textContent = z;
-      czSel.appendChild(o);
-    });
-    displayRequiredRValues();
-    updateSummaryContext();
-    updateExampleNote();
+  // ═══ GROUND ═══
+  svg.appendChild(el('rect', {x:CX-20, y:flBotY+STEEL+4, width:CW+40, height:6, fill:'#ccd2d9', rx:'2'}));
+  const groundG = el('g', {stroke:'#b0b8c4', 'stroke-width':'0.6', 'stroke-dasharray':'5,4'});
+  groundG.appendChild(el('line', {x1:CX-20, y1:flBotY+STEEL+12, x2:CX+CW+20, y2:flBotY+STEEL+12}));
+  svg.appendChild(groundG);
+
+  // ═══ INSULATION RECTS ═══
+  const insX = lwInner + 4;   // interior left edge
+  const insXR = rwInner;       // interior right edge
+  const insW = insXR - insX;   // interior width
+
+  // Ceiling insulation
+  svg.appendChild(el('rect', {id:'viz-ceiling-ins', x:insX, y:intTop, width:insW, height:'0', fill:'url(#hatch-sprayFoam)', opacity:'0', style:'transition:all 0.35s ease'}));
+  svg.appendChild(el('rect', {id:'viz-ceiling-ins-border', x:insX, y:intTop, width:insW, height:'0', fill:'none', stroke:'#333', 'stroke-width':'0.6', opacity:'0', style:'transition:all 0.35s ease'}));
+
+  // Floor insulation
+  svg.appendChild(el('rect', {id:'viz-floor-ins', x:insX, y:intBot, width:insW, height:'0', fill:'url(#hatch-sprayFoam)', opacity:'0', style:'transition:all 0.35s ease'}));
+  svg.appendChild(el('rect', {id:'viz-floor-ins-border', x:insX, y:intBot, width:insW, height:'0', fill:'none', stroke:'#333', 'stroke-width':'0.6', opacity:'0', style:'transition:all 0.35s ease'}));
+
+  // Wall insulation (L/R, inside/outside)
+  ['viz-lwall-inside','viz-lwall-outside','viz-rwall-inside','viz-rwall-outside'].forEach(id => {
+    svg.appendChild(el('rect', {id, x:'0', y:intTop, width:'0', height:wallH, fill:'url(#hatch-sprayFoam)', opacity:'0', style:'transition:all 0.35s ease'}));
+    svg.appendChild(el('rect', {id:id+'-border', x:'0', y:intTop, width:'0', height:wallH, fill:'none', stroke:'#333', 'stroke-width':'0.6', opacity:'0', style:'transition:all 0.35s ease'}));
+  });
+
+  // ═══ ANNOTATIONS ═══
+  const annoG1 = el('g', {id:'anno-ceiling', opacity:'0', style:'transition:opacity 0.3s'});
+  annoG1.appendChild(el('line', {x1:insX+insW*0.6, y1:intTop+5, x2:W-30, y2:42, stroke:'#455568', 'stroke-width':'0.7'}));
+  annoG1.appendChild(el('circle', {cx:insX+insW*0.6, cy:intTop+5, r:'2', fill:'#455568'}));
+  const at1 = txt(W-28, 40, '', {anchor:'start', fill:'#334155', size:'8.5', weight:'700'});
+  at1.id = 'anno-ceiling-text'; annoG1.appendChild(at1);
+  svg.appendChild(annoG1);
+
+  const annoG2 = el('g', {id:'anno-floor', opacity:'0', style:'transition:opacity 0.3s'});
+  annoG2.appendChild(el('line', {x1:insX+insW*0.6, y1:intBot-5, x2:W-30, y2:intBot+20, stroke:'#455568', 'stroke-width':'0.7'}));
+  annoG2.appendChild(el('circle', {cx:insX+insW*0.6, cy:intBot-5, r:'2', fill:'#455568'}));
+  const at2 = txt(W-28, intBot+24, '', {anchor:'start', fill:'#334155', size:'8.5', weight:'700'});
+  at2.id = 'anno-floor-text'; annoG2.appendChild(at2);
+  svg.appendChild(annoG2);
+
+  const annoG3 = el('g', {id:'anno-wall', opacity:'0', style:'transition:opacity 0.3s'});
+  annoG3.appendChild(el('line', {x1:CX+CORR+10, y1:intTop+wallH*0.4, x2:22, y2:intTop+wallH*0.25, stroke:'#455568', 'stroke-width':'0.7'}));
+  annoG3.appendChild(el('circle', {cx:CX+CORR+10, cy:intTop+wallH*0.4, r:'2', fill:'#455568'}));
+  const at3 = txt(20, intTop+wallH*0.25-6, '', {anchor:'start', fill:'#334155', size:'8.5', weight:'700'});
+  at3.id = 'anno-wall-text'; annoG3.appendChild(at3);
+  svg.appendChild(annoG3);
+
+  // Interior label
+  svg.appendChild(txt(W/2, intTop + wallH/2 + 4, 'INTERIOR SPACE', {fill:'#aab3bd', size:'12', weight:'500', ls:'0.1em'}));
+
+  // Dimension line
+  const dimY = flBotY + STEEL + 28;
+  svg.appendChild(el('line', {x1:insX, y1:dimY, x2:insXR, y2:dimY, stroke:'#94a3b8', 'stroke-width':'0.5'}));
+  svg.appendChild(el('line', {x1:insX, y1:dimY-4, x2:insX, y2:dimY+4, stroke:'#94a3b8', 'stroke-width':'0.5'}));
+  svg.appendChild(el('line', {x1:insXR, y1:dimY-4, x2:insXR, y2:dimY+4, stroke:'#94a3b8', 'stroke-width':'0.5'}));
+  svg.appendChild(txt(W/2, dimY+12, "40′ HIGH-CUBE CONTAINER — INTERIOR CLEAR", {fill:'#94a3b8', size:'8'}));
+
+  // Store geometry for JS access
+  window._geo = { insX, insW, insXR, intTop, intBot, wallH, lwInner, rwInner, lwOuter:CX, rwOuter:CX+CW-CORR, CORR };
+
+  document.getElementById('svg-wrap').appendChild(svg);
+})();
+
+/* ══════════════════════════════════════
+   DATA
+   ══════════════════════════════════════ */
+const states=[{name:"Alabama",code:"AL"},{name:"Alaska",code:"AK"},{name:"Arizona",code:"AZ"},{name:"Arkansas",code:"AR"},{name:"California",code:"CA"},{name:"Colorado",code:"CO"},{name:"Connecticut",code:"CT"},{name:"Delaware",code:"DE"},{name:"Florida",code:"FL"},{name:"Georgia",code:"GA"},{name:"Hawaii",code:"HI"},{name:"Idaho",code:"ID"},{name:"Illinois",code:"IL"},{name:"Indiana",code:"IN"},{name:"Iowa",code:"IA"},{name:"Kansas",code:"KS"},{name:"Kentucky",code:"KY"},{name:"Louisiana",code:"LA"},{name:"Maine",code:"ME"},{name:"Maryland",code:"MD"},{name:"Massachusetts",code:"MA"},{name:"Michigan",code:"MI"},{name:"Minnesota",code:"MN"},{name:"Mississippi",code:"MS"},{name:"Missouri",code:"MO"},{name:"Montana",code:"MT"},{name:"Nebraska",code:"NE"},{name:"Nevada",code:"NV"},{name:"New Hampshire",code:"NH"},{name:"New Jersey",code:"NJ"},{name:"New Mexico",code:"NM"},{name:"New York",code:"NY"},{name:"North Carolina",code:"NC"},{name:"North Dakota",code:"ND"},{name:"Ohio",code:"OH"},{name:"Oklahoma",code:"OK"},{name:"Oregon",code:"OR"},{name:"Pennsylvania",code:"PA"},{name:"Rhode Island",code:"RI"},{name:"South Carolina",code:"SC"},{name:"South Dakota",code:"SD"},{name:"Tennessee",code:"TN"},{name:"Texas",code:"TX"},{name:"Utah",code:"UT"},{name:"Vermont",code:"VT"},{name:"Virginia",code:"VA"},{name:"Washington",code:"WA"},{name:"West Virginia",code:"WV"},{name:"Wisconsin",code:"WI"},{name:"Wyoming",code:"WY"}];
+
+const stateClimateZones={"AL":["3A"],"AK":["7","8"],"AZ":["2B","3B","4B","5B"],"AR":["3A","4A"],"CA":["2B","3B","3C","4B","5B","6B"],"CO":["4B","5B","6B","7"],"CT":["5A"],"DE":["4A"],"FL":["1A","2A"],"GA":["2A","3A","4A"],"HI":["1A"],"ID":["5B","6B"],"IL":["4A","5A"],"IN":["4A","5A"],"IA":["5A","6A"],"KS":["4A","4B","5A"],"KY":["4A","5A"],"LA":["2A","3A"],"ME":["6A"],"MD":["4A"],"MA":["5A"],"MI":["5A","6A"],"MN":["6A","7"],"MS":["3A"],"MO":["4A","5A"],"MT":["5B","6B","7"],"NE":["5A","5B"],"NV":["3B","4B","5B"],"NH":["6A"],"NJ":["4A"],"NM":["3B","4B","5B"],"NY":["4A","5A","6A"],"NC":["3A","4A"],"ND":["6A","7"],"OH":["5A"],"OK":["3A","3B","4A"],"OR":["4C","5B","6B"],"PA":["4A","5A"],"RI":["5A"],"SC":["3A"],"SD":["5A","6A"],"TN":["3A","4A"],"TX":["2A","2B","3A","3B","4A","4B"],"UT":["3B","4B","5B","6B"],"VT":["6A"],"VA":["4A"],"WA":["4C","5B","6B"],"WV":["4A","5A"],"WI":["6A","7"],"WY":["5B","6B","7"]};
+
+const rValuesByZone={"1":{ceiling:"30",wall:"13",floor:"13"},"1A":{ceiling:"30",wall:"13",floor:"13"},"2":{ceiling:"38",wall:"13",floor:"13"},"2A":{ceiling:"38",wall:"13",floor:"13"},"2B":{ceiling:"38",wall:"13",floor:"13"},"3":{ceiling:"38",wall:"20 or 13+5",floor:"19"},"3A":{ceiling:"38",wall:"20 or 13+5",floor:"19"},"3B":{ceiling:"38",wall:"20 or 13+5",floor:"19"},"3C":{ceiling:"38",wall:"20 or 13+5",floor:"19"},"4":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"19"},"4A":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"19"},"4B":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"19"},"4C":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"19"},"5":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"},"5A":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"},"5B":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"},"6":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"},"6A":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"},"6B":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"},"7":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"},"8":{ceiling:"60",wall:"30 or 20+5 or 13+10",floor:"30"}};
+
+const insulationRValues = { sprayFoam: 6, batt: 3.5, polyiso: 6 };
+const insPatternMap = { sprayFoam:'url(#hatch-sprayFoam)', batt:'url(#hatch-batt)', polyiso:'url(#hatch-polyiso)' };
+const insNameMap = { sprayFoam:'CLOSED-CELL SPRAY FOAM', batt:'FIBERGLASS BATT', polyiso:'POLYISO RIGID BOARD' };
+
+/* ══ INIT ══ */
+const stateSelect = document.getElementById('state');
+states.forEach(s => { const o = document.createElement('option'); o.value=s.code; o.textContent=s.name; stateSelect.appendChild(o); });
+
+function updateClimateZones() {
+  const zones = stateClimateZones[stateSelect.value] || [];
+  const czSel = document.getElementById('climateZone');
+  czSel.innerHTML = '<option value="">Select zone…</option>';
+  zones.forEach(z => { const o=document.createElement('option'); o.value=z; o.textContent=z; czSel.appendChild(o); });
+  displayRequiredRValues(); updateSummaryContext(); updateExampleNote();
+}
+
+function displayRequiredRValues() {
+  const cz = document.getElementById('climateZone').value;
+  const rv = rValuesByZone[cz];
+  if (rv) {
+    document.getElementById('req-ceiling').textContent=rv.ceiling;
+    document.getElementById('req-walls').textContent=rv.wall;
+    document.getElementById('req-floor').textContent=rv.floor;
+    document.getElementById('floor-required-inline').textContent=rv.floor;
+    document.getElementById('ceiling-required-inline').textContent=rv.ceiling;
+    document.getElementById('wall-required-inline').textContent=rv.wall;
+    document.getElementById('req-row-wrap').classList.remove('hidden');
+  } else {
+    document.getElementById('req-row-wrap').classList.add('hidden');
+    document.getElementById('floor-required-inline').textContent='—';
+    document.getElementById('ceiling-required-inline').textContent='—';
+    document.getElementById('wall-required-inline').textContent='—';
   }
+  updateFloorRValue(); updateCeilingRValue(); updateWallRValue();
+  updateSummaryContext(); updateExampleNote();
+}
 
-  function displayRequiredRValues() {
-    const cz = document.getElementById('climateZone').value;
-    const rv = rValuesByZone[cz];
-    if (rv) {
-      document.getElementById('req-ceiling').textContent = rv.ceiling;
-      document.getElementById('req-walls').textContent = rv.wall;
-      document.getElementById('req-floor').textContent = rv.floor;
-      document.getElementById('floor-required-inline').textContent = rv.floor;
-      document.getElementById('ceiling-required-inline').textContent = rv.ceiling;
-      document.getElementById('wall-required-inline').textContent = rv.wall;
-      document.getElementById('req-row-wrap').classList.remove('hidden');
-    } else {
-      document.getElementById('req-row-wrap').classList.add('hidden');
-      document.getElementById('floor-required-inline').textContent = '—';
-      document.getElementById('ceiling-required-inline').textContent = '—';
-      document.getElementById('wall-required-inline').textContent = '—';
-    }
-    updateFloorRValue();
-    updateCeilingRValue();
-    updateWallRValue();
-    updateSummaryContext();
-    updateExampleNote();
-  }
+/* ══ VIZ HELPERS ══ */
+function setR(id, attrs) {
+  const e = document.getElementById(id);
+  if (!e) return;
+  for (const [k,v] of Object.entries(attrs)) e.setAttribute(k, String(v));
+}
+function setIns(baseId, h, y, fill, vis) {
+  setR(baseId, {height:h, y, fill}); document.getElementById(baseId).style.opacity = vis?1:0;
+  setR(baseId+'-border', {height:h, y}); const b=document.getElementById(baseId+'-border'); if(b) b.style.opacity = vis?0.5:0;
+}
+function setInsW(baseId, w, x, fill, vis) {
+  setR(baseId, {width:w, x, fill}); document.getElementById(baseId).style.opacity = vis?1:0;
+  setR(baseId+'-border', {width:w, x}); const b=document.getElementById(baseId+'-border'); if(b) b.style.opacity = vis?0.5:0;
+}
+function setAnno(gId, tId, text, vis) {
+  document.getElementById(gId).style.opacity = vis?1:0;
+  document.getElementById(tId).textContent = text;
+}
 
-  /* ══════════════════════════════════════
-     FLOOR
-     ══════════════════════════════════════ */
-  function updateFloorRValue() {
-    const type = document.getElementById('floor-type').value;
-    const th = parseFloat(document.getElementById('floor-thickness').value) || 0;
-    const Rp = (insulationRValues[type] * th).toFixed(1);
-    document.getElementById('floor-provided').textContent = Rp;
-
-    const cz = document.getElementById('climateZone').value;
-    const rv = rValuesByZone[cz];
-    let meets = false;
-    if (rv) meets = parseFloat(Rp) >= parseFloat(rv.floor);
-
-    setBadgeState('floor-badge', meets);
-    setScoreState('score-floor', cz, meets);
-
-    // Visual: insulation grows UP from floor steel
-    const px = Math.min(th * 10, 100);
-    const el = document.getElementById('viz-floor-ins');
-    el.setAttribute('height', px);
-    el.setAttribute('y', 316 - px);
-    el.setAttribute('fill', insColorMap[type]);
-    el.style.opacity = th > 0 ? 1 : 0;
-
-    updateExampleNote();
-  }
-
-  /* ══════════════════════════════════════
-     CEILING
-     ══════════════════════════════════════ */
-  function updateCeilingRValue() {
-    const type = document.getElementById('ceiling-type').value;
-    const th = parseFloat(document.getElementById('ceiling-thickness').value) || 0;
-    const Rp = (insulationRValues[type] * th).toFixed(1);
-    document.getElementById('ceiling-provided').textContent = Rp;
-
-    const cz = document.getElementById('climateZone').value;
-    const rv = rValuesByZone[cz];
-    let meets = false;
-    if (rv) meets = parseFloat(Rp) >= parseFloat(rv.ceiling);
-
-    setBadgeState('ceiling-badge', meets);
-    setScoreState('score-ceiling', cz, meets);
-
-    // Visual: insulation grows DOWN from roof steel
-    const px = Math.min(th * 10, 100);
-    const el = document.getElementById('viz-ceiling-ins');
-    el.setAttribute('height', px);
-    el.setAttribute('fill', insColorMap[type]);
-    el.style.opacity = th > 0 ? 1 : 0;
-
-    updateExampleNote();
-  }
-
-  /* ══════════════════════════════════════
-     WALLS
-     ══════════════════════════════════════ */
-  function toggleWallInputs() {
-    const cfg = document.querySelector('input[name="wall-config"]:checked').value;
-    document.getElementById('wall-continuous-inputs').classList.toggle('hidden', cfg !== 'cavityContinuous');
-    updateWallRValue();
-  }
-
-  function updateWallRValue() {
-    const cfg = document.querySelector('input[name="wall-config"]:checked').value;
-    const loc = document.querySelector('input[name="wall-location"]:checked').value;
-
-    const cavType = document.getElementById('wall-cavity-type').value;
-    const cavTh = parseFloat(document.getElementById('wall-cavity-thickness').value) || 0;
-    const R_cav = (insulationRValues[cavType] * cavTh).toFixed(1);
-
-    let contType = document.getElementById('wall-continuous-type').value;
-    let contTh = 0;
-    let R_cont = '0.0';
-    if (cfg === 'cavityContinuous') {
-      contTh = parseFloat(document.getElementById('wall-continuous-thickness').value) || 0;
-      R_cont = (insulationRValues[contType] * contTh).toFixed(1);
-    }
-
-    document.getElementById('wall-provided').textContent = `Cav R-${R_cav} · Cont R-${R_cont}`;
-
-    const cz = document.getElementById('climateZone').value;
-    const rv = rValuesByZone[cz];
-    let meets = false;
-    if (rv) meets = meetsWallRequirement(rv.wall, parseFloat(R_cav), parseFloat(R_cont));
-
-    setBadgeState('wall-badge', meets);
-    setScoreState('score-walls', cz, meets);
-
-    // Visual: wall insulation
-    const cavPx = Math.min(cavTh * 12, 60);
-    const contPx = cfg === 'cavityContinuous' ? Math.min(contTh * 12, 50) : 0;
-    const totalPx = cavPx + contPx;
-
-    // Determine fill based on primary (cavity) type
-    const cavFill = insColorMap[cavType];
-    const contFill = cfg === 'cavityContinuous' ? insColorMap[contType] : cavFill;
-
-    if (loc === 'inside') {
-      // LEFT inside
-      document.getElementById('viz-lwall-inside').setAttribute('width', totalPx);
-      document.getElementById('viz-lwall-inside').setAttribute('fill', cavFill);
-      document.getElementById('viz-lwall-inside').style.opacity = totalPx > 0 ? 1 : 0;
-      document.getElementById('viz-lwall-outside').setAttribute('width', 0);
-      document.getElementById('viz-lwall-outside').style.opacity = 0;
-      // RIGHT inside
-      document.getElementById('viz-rwall-inside').setAttribute('x', 524 - totalPx);
-      document.getElementById('viz-rwall-inside').setAttribute('width', totalPx);
-      document.getElementById('viz-rwall-inside').setAttribute('fill', cavFill);
-      document.getElementById('viz-rwall-inside').style.opacity = totalPx > 0 ? 1 : 0;
-      document.getElementById('viz-rwall-outside').setAttribute('width', 0);
-      document.getElementById('viz-rwall-outside').style.opacity = 0;
-    } else {
-      // LEFT outside
-      document.getElementById('viz-lwall-outside').setAttribute('x', 60 - totalPx);
-      document.getElementById('viz-lwall-outside').setAttribute('width', totalPx);
-      document.getElementById('viz-lwall-outside').setAttribute('fill', cavFill);
-      document.getElementById('viz-lwall-outside').style.opacity = totalPx > 0 ? 1 : 0;
-      document.getElementById('viz-lwall-inside').setAttribute('width', 0);
-      document.getElementById('viz-lwall-inside').style.opacity = 0;
-      // RIGHT outside
-      document.getElementById('viz-rwall-outside').setAttribute('x', 540);
-      document.getElementById('viz-rwall-outside').setAttribute('width', totalPx);
-      document.getElementById('viz-rwall-outside').setAttribute('fill', cavFill);
-      document.getElementById('viz-rwall-outside').style.opacity = totalPx > 0 ? 1 : 0;
-      document.getElementById('viz-rwall-inside').setAttribute('width', 0);
-      document.getElementById('viz-rwall-inside').style.opacity = 0;
-    }
-
-    updateExampleNote();
-  }
-
-  function meetsWallRequirement(reqStr, R_cav, R_cont) {
-    const opts = reqStr.split(' or ');
-    for (let opt of opts) {
-      if (opt.includes('+')) {
-        const [cr, conr] = opt.split('+').map(s => parseFloat(s));
-        if (R_cav >= cr && R_cont >= conr) return true;
-      } else {
-        if (R_cav >= parseFloat(opt)) return true;
-      }
-    }
-    return false;
-  }
-
-  /* ══════════════════════════════════════
-     HELPERS
-     ══════════════════════════════════════ */
-  function setBadgeState(id, pass) {
-    const el = document.getElementById(id);
-    el.textContent = pass ? 'Compliant' : 'Not compliant';
-    el.className = `badge ${pass ? 'badge-pass' : 'badge-fail'}`;
-  }
-
-  function setScoreState(id, cz, pass) {
-    const el = document.getElementById(id);
-    if (!cz) {
-      el.textContent = 'Pending';
-      el.className = 'sr-value sr-pending';
-    } else if (pass) {
-      el.textContent = 'Pass';
-      el.className = 'sr-value sr-pass';
-    } else {
-      el.textContent = 'Fail';
-      el.className = 'sr-value sr-fail';
-    }
-  }
-
-  function getSelectedStateName() {
-    const s = states.find(st => st.code === stateSelect.value);
-    return s ? s.name : '—';
-  }
-
-  function updateSummaryContext() {
-    const zone = document.getElementById('climateZone').value || '—';
-    document.getElementById('summary-state').textContent = getSelectedStateName();
-    document.getElementById('summary-zone').textContent = zone;
-  }
-
-  function formatThickness(v) { return `${v.toFixed(1)} INCHES`; }
-
-  /* ══════════════════════════════════════
-     EXAMPLE NOTE
-     ══════════════════════════════════════ */
-  function updateExampleNote() {
-    const zone = document.getElementById('climateZone').value;
-    const stateName = getSelectedStateName();
-    const rv = rValuesByZone[zone];
-    const output = document.getElementById('example-note-output');
-    const cfg = document.querySelector('input[name="wall-config"]:checked').value;
-    const loc = document.querySelector('input[name="wall-location"]:checked').value;
-
-    const floorType = document.getElementById('floor-type').selectedOptions[0].textContent;
-    const floorTh = parseFloat(document.getElementById('floor-thickness').value) || 0;
-    const floorR = document.getElementById('floor-provided').textContent;
-
-    const ceilType = document.getElementById('ceiling-type').selectedOptions[0].textContent;
-    const ceilTh = parseFloat(document.getElementById('ceiling-thickness').value) || 0;
-    const ceilR = document.getElementById('ceiling-provided').textContent;
-
-    const wCavType = document.getElementById('wall-cavity-type').selectedOptions[0].textContent;
-    const wCavTh = parseFloat(document.getElementById('wall-cavity-thickness').value) || 0;
-    const wContType = document.getElementById('wall-continuous-type').selectedOptions[0].textContent;
-    const wContTh = parseFloat(document.getElementById('wall-continuous-thickness').value) || 0;
-
-    if (!rv || !zone) {
-      output.value = `INSULATION NOTES (EXAMPLE FORMAT):\n\nA. SELECT A STATE AND CLIMATE ZONE TO GENERATE PROJECT-SPECIFIC VALUES.\n\nB. R-800 COMBUSTIBLE INSULATION SHALL BE SEPARATED A MINIMUM OF 3 INCHES FROM RECESSED LIGHTING FIXTURES, FAN MOTORS, AND OTHER HEAT-PRODUCING DEVICES UNLESS THE DEVICE IS LISTED FOR LESSER CLEARANCES.\n\nNOTE: THIS IS A SAMPLE NOTE FORMAT. VERIFY ALL VALUES AGAINST LOCAL CODE REQUIREMENTS BEFORE USE IN PROJECT DOCUMENTATION.`;
-      return;
-    }
-
-    const wallText = cfg === 'cavityContinuous'
-      ? `${loc.toUpperCase()} WALL INSULATION PROVIDED AS CAVITY INSULATION (${wCavType}, ${formatThickness(wCavTh)}) PLUS CONTINUOUS INSULATION (${wContType}, ${formatThickness(wContTh)}).`
-      : `${loc.toUpperCase()} WALL INSULATION PROVIDED AS CAVITY INSULATION ONLY (${wCavType}, ${formatThickness(wCavTh)}).`;
-
-    output.value = `INSULATION NOTES (EXAMPLE FORMAT):\n\nA. 2021 INTERNATIONAL ENERGY CONSERVATION CODE REQUIREMENTS FOR LOW-RISE RESIDENTIAL: SEE CURRENT ENERGY CODE SPECIFICATIONS. BASIC BUILDING ENVELOPE COMPLIANCE PATH: ROOF/ATTIC R-${rv.ceiling}; JOIST VAULTS R-${rv.ceiling}; WALLS R-${rv.wall}; FLOOR R-${rv.floor}; WINDOWS U-VALUE .35. WATER SERVICE PIPE IN UNCONDITIONED AREA R-3.\n\nB. PROJECT BASIS: ${stateName.toUpperCase()}, CLIMATE ZONE ${zone}. FLOOR INSULATION PROVIDED AS ${floorType.toUpperCase()} AT ${formatThickness(floorTh)} FOR APPROX. R-${floorR}. CEILING INSULATION PROVIDED AS ${ceilType.toUpperCase()} AT ${formatThickness(ceilTh)} FOR APPROX. R-${ceilR}. ${wallText}\n\nC. THIS IS AN EXAMPLE NOTE FORMAT. VERIFY FINAL INSULATION MATERIALS, THICKNESSES, AND INSTALLATION METHODS WITH APPROVED ARCHITECTURAL / ENERGY DOCUMENTS AND APPLICABLE LOCAL CODE AMENDMENTS PRIOR TO CONSTRUCTION.\n\nD. R-800 COMBUSTIBLE INSULATION SHALL BE SEPARATED A MINIMUM OF 3 INCHES FROM RECESSED LIGHTING FIXTURES, FAN MOTORS, AND OTHER HEAT-PRODUCING DEVICES UNLESS THE DEVICE IS LISTED FOR LESSER CLEARANCES.`;
-  }
-
-  /* ══════════════════════════════════════
-     COPY / SELECT
-     ══════════════════════════════════════ */
-  function selectExampleNote() {
-    const ta = document.getElementById('example-note-output');
-    ta.focus(); ta.select();
-    setCopyStatus('Text selected.');
-  }
-
-  async function copyExampleNote() {
-    const ta = document.getElementById('example-note-output');
-    try {
-      await navigator.clipboard.writeText(ta.value);
-      setCopyStatus('Copied to clipboard.');
-    } catch {
-      ta.focus(); ta.select();
-      setCopyStatus('Clipboard blocked — text selected for manual copy.');
-    }
-  }
-
-  function setCopyStatus(msg) {
-    const el = document.getElementById('copy-status');
-    el.textContent = msg;
-    setTimeout(() => { el.textContent = 'Updates live with your selections.'; }, 3000);
-  }
-
-  /* ══════════════════════════════════════
-     EVENT LISTENERS
-     ══════════════════════════════════════ */
-  document.getElementById('floor-type').addEventListener('change', updateFloorRValue);
-  document.getElementById('floor-thickness').addEventListener('input', updateFloorRValue);
-  document.getElementById('ceiling-type').addEventListener('change', updateCeilingRValue);
-  document.getElementById('ceiling-thickness').addEventListener('input', updateCeilingRValue);
-  document.getElementById('wall-cavity-type').addEventListener('change', updateWallRValue);
-  document.getElementById('wall-cavity-thickness').addEventListener('input', updateWallRValue);
-  document.getElementById('wall-continuous-type').addEventListener('change', updateWallRValue);
-  document.getElementById('wall-continuous-thickness').addEventListener('input', updateWallRValue);
-
-  /* Init */
-  updateSummaryContext();
+/* ══ FLOOR ══ */
+function updateFloorRValue() {
+  const G = window._geo;
+  const type = document.getElementById('floor-type').value;
+  const th = parseFloat(document.getElementById('floor-thickness').value)||0;
+  const Rp = (insulationRValues[type]*th).toFixed(1);
+  document.getElementById('floor-provided').textContent = Rp;
+  const cz = document.getElementById('climateZone').value;
+  const rv = rValuesByZone[cz];
+  let meets = rv ? parseFloat(Rp)>=parseFloat(rv.floor) : false;
+  setBadgeState('floor-badge', meets); setScoreState('score-floor', cz, meets);
+  const px = Math.min(th*14, 110);
+  setIns('viz-floor-ins', px, G.intBot-px, insPatternMap[type], th>0);
+  setAnno('anno-floor','anno-floor-text', th>0?`R-${Rp} ${insNameMap[type]}`:'', th>0);
   updateExampleNote();
+}
+
+/* ══ CEILING ══ */
+function updateCeilingRValue() {
+  const G = window._geo;
+  const type = document.getElementById('ceiling-type').value;
+  const th = parseFloat(document.getElementById('ceiling-thickness').value)||0;
+  const Rp = (insulationRValues[type]*th).toFixed(1);
+  document.getElementById('ceiling-provided').textContent = Rp;
+  const cz = document.getElementById('climateZone').value;
+  const rv = rValuesByZone[cz];
+  let meets = rv ? parseFloat(Rp)>=parseFloat(rv.ceiling) : false;
+  setBadgeState('ceiling-badge', meets); setScoreState('score-ceiling', cz, meets);
+  const px = Math.min(th*14, 110);
+  setIns('viz-ceiling-ins', px, G.intTop, insPatternMap[type], th>0);
+  setAnno('anno-ceiling','anno-ceiling-text', th>0?`R-${Rp} ${insNameMap[type]}`:'', th>0);
+  updateExampleNote();
+}
+
+/* ══ WALLS ══ */
+function toggleWallInputs() {
+  document.getElementById('wall-continuous-inputs').classList.toggle('hidden', document.querySelector('input[name="wall-config"]:checked').value!=='cavityContinuous');
+  updateWallRValue();
+}
+
+function updateWallRValue() {
+  const G = window._geo;
+  const cfg = document.querySelector('input[name="wall-config"]:checked').value;
+  const loc = document.querySelector('input[name="wall-location"]:checked').value;
+  const cavType = document.getElementById('wall-cavity-type').value;
+  const cavTh = parseFloat(document.getElementById('wall-cavity-thickness').value)||0;
+  const R_cav = (insulationRValues[cavType]*cavTh).toFixed(1);
+  let contType = document.getElementById('wall-continuous-type').value;
+  let contTh=0, R_cont='0.0';
+  if (cfg==='cavityContinuous') { contTh=parseFloat(document.getElementById('wall-continuous-thickness').value)||0; R_cont=(insulationRValues[contType]*contTh).toFixed(1); }
+  document.getElementById('wall-provided').textContent = `Cav R-${R_cav} · Cont R-${R_cont}`;
+  const cz = document.getElementById('climateZone').value;
+  const rv = rValuesByZone[cz];
+  let meets = rv ? meetsWallRequirement(rv.wall, parseFloat(R_cav), parseFloat(R_cont)) : false;
+  setBadgeState('wall-badge', meets); setScoreState('score-walls', cz, meets);
+
+  const cavPx = Math.min(cavTh*14, 70);
+  const contPx = cfg==='cavityContinuous' ? Math.min(contTh*14, 60) : 0;
+  const totalPx = cavPx + contPx;
+  const fill = insPatternMap[cavType];
+  const has = totalPx > 0;
+
+  if (loc==='inside') {
+    const lx = G.lwInner + 4;  // right of inner plate
+    setInsW('viz-lwall-inside', totalPx, lx, fill, has);
+    setInsW('viz-lwall-outside', 0, G.lwOuter, fill, false);
+    setInsW('viz-rwall-inside', totalPx, G.rwInner - totalPx, fill, has);
+    setInsW('viz-rwall-outside', 0, G.rwOuter + G.CORR, fill, false);
+  } else {
+    setInsW('viz-lwall-outside', totalPx, G.lwOuter - totalPx, fill, has);
+    setInsW('viz-lwall-inside', 0, G.lwInner+4, fill, false);
+    setInsW('viz-rwall-outside', totalPx, G.rwOuter + G.CORR, fill, has);
+    setInsW('viz-rwall-inside', 0, G.rwInner, fill, false);
+  }
+
+  let annoText = '';
+  if (cavTh>0) { annoText = `R-${R_cav} ${insNameMap[cavType]}`; if (cfg==='cavityContinuous'&&contTh>0) annoText += ` + R-${R_cont} CONT.`; }
+  setAnno('anno-wall','anno-wall-text', annoText, cavTh>0);
+  updateExampleNote();
+}
+
+function meetsWallRequirement(rs, Rc, Rco) {
+  for (let o of rs.split(' or ')) { if (o.includes('+')) { const [a,b]=o.split('+').map(Number); if(Rc>=a&&Rco>=b)return true; } else { if(Rc>=parseFloat(o))return true; } } return false;
+}
+
+/* ══ HELPERS ══ */
+function setBadgeState(id, pass) { const e=document.getElementById(id); e.textContent=pass?'Compliant':'Not compliant'; e.className=`badge ${pass?'badge-pass':'badge-fail'}`; }
+function setScoreState(id, cz, pass) { const e=document.getElementById(id); if(!cz){e.textContent='Pending';e.className='sr-value sr-pending';} else if(pass){e.textContent='Pass';e.className='sr-value sr-pass';} else{e.textContent='Fail';e.className='sr-value sr-fail';} }
+function getSelectedStateName() { const s=states.find(st=>st.code===stateSelect.value); return s?s.name:'—'; }
+function updateSummaryContext() { document.getElementById('summary-state').textContent=getSelectedStateName(); document.getElementById('summary-zone').textContent=document.getElementById('climateZone').value||'—'; }
+function formatThickness(v) { return `${v.toFixed(1)} INCHES`; }
+
+/* ══ EXAMPLE NOTE ══ */
+function updateExampleNote() {
+  const zone=document.getElementById('climateZone').value, stateName=getSelectedStateName(), rv=rValuesByZone[zone], output=document.getElementById('example-note-output');
+  const cfg=document.querySelector('input[name="wall-config"]:checked').value, loc=document.querySelector('input[name="wall-location"]:checked').value;
+  const floorType=document.getElementById('floor-type').selectedOptions[0].textContent, floorTh=parseFloat(document.getElementById('floor-thickness').value)||0, floorR=document.getElementById('floor-provided').textContent;
+  const ceilType=document.getElementById('ceiling-type').selectedOptions[0].textContent, ceilTh=parseFloat(document.getElementById('ceiling-thickness').value)||0, ceilR=document.getElementById('ceiling-provided').textContent;
+  const wCavType=document.getElementById('wall-cavity-type').selectedOptions[0].textContent, wCavTh=parseFloat(document.getElementById('wall-cavity-thickness').value)||0;
+  const wContType=document.getElementById('wall-continuous-type').selectedOptions[0].textContent, wContTh=parseFloat(document.getElementById('wall-continuous-thickness').value)||0;
+  if (!rv||!zone) { output.value=`INSULATION NOTES (EXAMPLE FORMAT):\n\nA. SELECT A STATE AND CLIMATE ZONE TO GENERATE PROJECT-SPECIFIC VALUES.\n\nB. R-800 COMBUSTIBLE INSULATION SHALL BE SEPARATED A MINIMUM OF 3 INCHES FROM RECESSED LIGHTING FIXTURES, FAN MOTORS, AND OTHER HEAT-PRODUCING DEVICES UNLESS THE DEVICE IS LISTED FOR LESSER CLEARANCES.\n\nNOTE: THIS IS A SAMPLE NOTE FORMAT. VERIFY ALL VALUES AGAINST LOCAL CODE REQUIREMENTS BEFORE USE IN PROJECT DOCUMENTATION.`; return; }
+  const wallText = cfg==='cavityContinuous' ? `${loc.toUpperCase()} WALL INSULATION PROVIDED AS CAVITY INSULATION (${wCavType}, ${formatThickness(wCavTh)}) PLUS CONTINUOUS INSULATION (${wContType}, ${formatThickness(wContTh)}).` : `${loc.toUpperCase()} WALL INSULATION PROVIDED AS CAVITY INSULATION ONLY (${wCavType}, ${formatThickness(wCavTh)}).`;
+  output.value=`INSULATION NOTES (EXAMPLE FORMAT):\n\nA. 2021 INTERNATIONAL ENERGY CONSERVATION CODE REQUIREMENTS FOR LOW-RISE RESIDENTIAL: SEE CURRENT ENERGY CODE SPECIFICATIONS. BASIC BUILDING ENVELOPE COMPLIANCE PATH: ROOF/ATTIC R-${rv.ceiling}; JOIST VAULTS R-${rv.ceiling}; WALLS R-${rv.wall}; FLOOR R-${rv.floor}; WINDOWS U-VALUE .35. WATER SERVICE PIPE IN UNCONDITIONED AREA R-3.\n\nB. PROJECT BASIS: ${stateName.toUpperCase()}, CLIMATE ZONE ${zone}. FLOOR INSULATION PROVIDED AS ${floorType.toUpperCase()} AT ${formatThickness(floorTh)} FOR APPROX. R-${floorR}. CEILING INSULATION PROVIDED AS ${ceilType.toUpperCase()} AT ${formatThickness(ceilTh)} FOR APPROX. R-${ceilR}. ${wallText}\n\nC. THIS IS AN EXAMPLE NOTE FORMAT. VERIFY FINAL INSULATION MATERIALS, THICKNESSES, AND INSTALLATION METHODS WITH APPROVED ARCHITECTURAL / ENERGY DOCUMENTS AND APPLICABLE LOCAL CODE AMENDMENTS PRIOR TO CONSTRUCTION.\n\nD. R-800 COMBUSTIBLE INSULATION SHALL BE SEPARATED A MINIMUM OF 3 INCHES FROM RECESSED LIGHTING FIXTURES, FAN MOTORS, AND OTHER HEAT-PRODUCING DEVICES UNLESS THE DEVICE IS LISTED FOR LESSER CLEARANCES.`;
+}
+
+/* ══ COPY/SELECT ══ */
+function selectExampleNote() { const t=document.getElementById('example-note-output'); t.focus(); t.select(); setCopyStatus('Text selected.'); }
+async function copyExampleNote() { const t=document.getElementById('example-note-output'); try { await navigator.clipboard.writeText(t.value); setCopyStatus('Copied to clipboard.'); } catch { t.focus(); t.select(); setCopyStatus('Clipboard blocked — text selected for manual copy.'); } }
+function setCopyStatus(m) { const e=document.getElementById('copy-status'); e.textContent=m; setTimeout(()=>{e.textContent='Updates live with your selections.';}, 3000); }
+
+/* ══ EVENTS ══ */
+document.getElementById('floor-type').addEventListener('change', updateFloorRValue);
+document.getElementById('floor-thickness').addEventListener('input', updateFloorRValue);
+document.getElementById('ceiling-type').addEventListener('change', updateCeilingRValue);
+document.getElementById('ceiling-thickness').addEventListener('input', updateCeilingRValue);
+document.getElementById('wall-cavity-type').addEventListener('change', updateWallRValue);
+document.getElementById('wall-cavity-thickness').addEventListener('input', updateWallRValue);
+document.getElementById('wall-continuous-type').addEventListener('change', updateWallRValue);
+document.getElementById('wall-continuous-thickness').addEventListener('input', updateWallRValue);
+
+updateSummaryContext(); updateExampleNote();
 </script>
 </body>
 </html>
