@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shipping Container Insulation Planner</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --panel: #ffffff;
+      --panel-2: #f8fbff;
+      --card: #ffffff;
+      --card-border: rgba(15, 23, 42, 0.08);
+      --text: #0f172a;
+      --muted: #334155;
+      --accent: #2563eb;
+      --accent-2: #16a34a;
+      --danger: #dc2626;
+      --warn: #d97706;
+      --shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 10px;
+      --input-bg: #ffffff;
+      --line: rgba(15, 23, 42, 0.1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(37,99,235,0.08), transparent 28%),
+        radial-gradient(circle at top right, rgba(22,163,74,0.05), transparent 22%),
+        linear-gradient(180deg, #f8fbff 0%, #f4f7fb 55%, #eef3f9 100%);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    .page-shell {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(145deg, #ffffff, #f7fbff);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+      margin-bottom: 22px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle, rgba(96,165,250,0.3), transparent 65%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #1d4ed8;
+      background: rgba(37,99,235,0.08);
+      border: 1px solid rgba(37,99,235,0.16);
+      margin-bottom: 14px;
+    }
+
+    h1, h2, h3, h4, p { margin-top: 0; }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 10px;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-subtext {
+      max-width: 860px;
+      color: #334155;
+      font-size: 1rem;
+      margin-bottom: 0;
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(330px, 0.8fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .left-stack,
+    .right-stack {
+      display: grid;
+      gap: 22px;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, #ffffff, #fbfdff);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 22px 24px 0;
+    }
+
+    .panel-body {
+      padding: 24px;
+    }
+
+    .panel-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .panel-title h2,
+    .panel-title h3 {
+      margin-bottom: 0;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+    }
+
+    .panel-subtitle {
+      color: #475569;
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+
+    .toolbar-grid,
+    .requirements-grid,
+    .note-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .toolbar-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .requirements-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .note-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label,
+    .field-legend {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #dce7fb;
+    }
+
+    select,
+    input[type="number"] {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid rgba(15,23,42,0.14);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 0.98rem;
+      transition: 0.2s ease;
+      outline: none;
+    }
+
+    select:hover,
+    input[type="number"]:hover {
+      border-color: rgba(255,255,255,0.24);
+    }
+
+    select:focus,
+    input[type="number"]:focus {
+      border-color: rgba(96,165,250,0.65);
+      box-shadow: 0 0 0 4px rgba(96,165,250,0.16);
+    }
+
+    .mini-card {
+      background: #f8fbff;
+      border: 1px solid rgba(15,23,42,0.08);
+      border-radius: 18px;
+      padding: 18px;
+      min-height: 112px;
+    }
+
+    .mini-card .kicker {
+      color: #475569;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    .mini-card .value {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .mini-card .subvalue {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .components-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .component {
+      position: relative;
+      padding: 20px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #ffffff, #f8fbff);
+      border: 1px solid rgba(15,23,42,0.08);
+      min-height: 100%;
+      overflow: hidden;
+    }
+
+    .component::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(96,165,250,0), rgba(96,165,250,0.9), rgba(34,197,94,0.45), rgba(96,165,250,0));
+      opacity: 0.7;
+    }
+
+    .component-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .component h3 {
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .component-sub {
+      color: #475569;
+      font-size: 0.9rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .badge-pass {
+      color: #166534;
+      background: rgba(34,197,94,0.12);
+      border-color: rgba(34,197,94,0.18);
+    }
+
+    .badge-fail {
+      color: #991b1b;
+      background: rgba(239,68,68,0.1);
+      border-color: rgba(239,68,68,0.16);
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 14px 0 16px;
+    }
+
+    .stat-box {
+      background: #f8fbff;
+      border: 1px solid rgba(15,23,42,0.08);
+      border-radius: 16px;
+      padding: 12px 14px;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 1.18rem;
+      font-weight: 700;
+    }
+
+    .radio-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .radio-pills label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8fbff;
+      border: 1px solid rgba(15,23,42,0.1);
+      border-radius: 999px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      color: #1e293b;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    .radio-pills label:hover {
+      border-color: rgba(96,165,250,0.4);
+      background: rgba(96,165,250,0.08);
+    }
+
+    .radio-pills input[type="radio"] {
+      accent-color: var(--accent);
+      margin: 0;
+    }
+
+    .svg-wrap {
+      margin-top: 14px;
+      background: linear-gradient(180deg, #f8fbff, #f1f6fc);
+      border: 1px solid rgba(15,23,42,0.08);
+      border-radius: 18px;
+      padding: 10px;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 12px 18px rgba(0,0,0,0.18));
+    }
+
+    .steel {
+      fill: #7f8ca5;
+    }
+
+    .steel-dark {
+      fill: #61718b;
+    }
+
+    .corrugated-wall {
+      fill: #94a3b8;
+      stroke: #74859f;
+      stroke-width: 0.5;
+    }
+
+    .insulation {
+      fill: url(#insulationGradient);
+      opacity: 0.96;
+    }
+
+    .summary-panel {
+      position: sticky;
+      top: 20px;
+    }
+
+    .summary-score {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .score-pill {
+      padding: 12px;
+      text-align: center;
+      border-radius: 16px;
+      background: #f8fbff;
+      border: 1px solid rgba(15,23,42,0.08);
+    }
+
+    .score-pill .score-name {
+      display: block;
+      color: #475569;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .score-pill .score-value {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .callout {
+      border-radius: 18px;
+      padding: 16px;
+      border: 1px solid rgba(15,23,42,0.08);
+      background: #f8fbff;
+      margin-bottom: 14px;
+    }
+
+    .callout-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #0f172a;
+    }
+
+    .callout p,
+    .callout li {
+      color: #334155;
+      font-size: 0.93rem;
+      margin-bottom: 0;
+    }
+
+    .callout ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+    }
+
+    .copy-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: linear-gradient(180deg, rgba(96,165,250,0.2), rgba(96,165,250,0.12));
+      color: white;
+      font-weight: 700;
+      font-size: 0.92rem;
+      border-radius: 12px;
+      padding: 11px 14px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      box-shadow: 0 12px 24px rgba(37,99,235,0.16);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(96,165,250,0.3);
+    }
+
+    .btn.secondary {
+      background: rgba(255,255,255,0.06);
+      box-shadow: none;
+    }
+
+    .copy-status {
+      font-size: 0.88rem;
+      color: #475569;
+      min-height: 1.2em;
+    }
+
+    textarea.note-output {
+      width: 100%;
+      min-height: 360px;
+      resize: vertical;
+      border-radius: 18px;
+      border: 1px solid rgba(15,23,42,0.12);
+      background: #ffffff;
+      color: #111827;
+      padding: 18px;
+      font: 600 0.95rem/1.55 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      outline: none;
+      box-shadow: inset 0 1px 0 rgba(15,23,42,0.02);
+    }
+
+    .disclaimer {
+      color: #475569;
+      font-size: 0.88rem;
+      padding: 16px 18px;
+      background: #f8fbff;
+      border-top: 1px solid rgba(15,23,42,0.08);
+    }
+
+    .muted { color: #475569; }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 1080px) {
+      .app-grid {
+        grid-template-columns: 1fr;
+      }
+      .summary-panel {
+        position: static;
+      }
+      .components-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page-shell { padding: 14px; }
+      .hero, .panel-body { padding: 18px; }
+      .toolbar-grid,
+      .requirements-grid,
+      .summary-score,
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+      .copy-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .radio-pills {
+        flex-direction: column;
+      }
+      .panel-header {
+        padding: 18px 18px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <section class="hero">
+      <div class="eyebrow">Container Envelope Tool</div>
+      <h1>Shipping Container Insulation Planner</h1>
+      <p class="hero-subtext">
+        Same calculation logic, refreshed visual output. This version adds a cleaner UI, a live compliance summary,
+        and a copy-ready <strong>Example Requirements Note</strong> block your team can paste directly into plan sheets.
+      </p>
+    </section>
+
+    <div class="app-grid">
+      <div class="left-stack">
+        <section class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h2>Project Inputs</h2>
+            </div>
+            <p class="panel-subtitle">Select the state and climate zone first. Required prescriptive values update automatically.</p>
+          </div>
+          <div class="panel-body">
+            <div class="toolbar-grid">
+              <div class="field">
+                <label for="state">State</label>
+                <select id="state" onchange="updateClimateZones()">
+                  <option value="">-- Select State --</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="climateZone">Climate Zone</label>
+                <select id="climateZone" onchange="displayRequiredRValues()">
+                  <option value="">-- Select Climate Zone --</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="required-r-values" style="display:none;">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h2>Required R-Values</h2>
+              <span class="badge badge-pass" id="zone-badge">IECC 2021</span>
+            </div>
+            <p class="panel-subtitle">Prescriptive baseline for quick design coordination.</p>
+          </div>
+          <div class="panel-body">
+            <div class="requirements-grid">
+              <div class="mini-card">
+                <div class="kicker">Ceiling</div>
+                <div class="value">R-<span id="req-ceiling"></span></div>
+                <div class="subvalue">Minimum target</div>
+              </div>
+              <div class="mini-card">
+                <div class="kicker">Walls</div>
+                <div class="value">R-<span id="req-walls"></span></div>
+                <div class="subvalue">Prescriptive path</div>
+              </div>
+              <div class="mini-card">
+                <div class="kicker">Floor</div>
+                <div class="value">R-<span id="req-floor"></span></div>
+                <div class="subvalue">Minimum target</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h2>Insulation Builder</h2>
+            </div>
+            <p class="panel-subtitle">Visual input cards for floor, ceiling, and wall assemblies.</p>
+          </div>
+          <div class="panel-body">
+            <div class="components-grid" id="insulation-selection">
+              <div class="component" id="floor">
+                <div class="component-header">
+                  <div>
+                    <h3>Floor</h3>
+                    <div class="component-sub">Underfloor assembly</div>
+                  </div>
+                  <span id="floor-badge" class="badge badge-fail">Not compliant</span>
+                </div>
+
+                <div class="field">
+                  <label for="floor-type">Insulation Type</label>
+                  <select id="floor-type">
+                    <option value="sprayFoam">Spray Foam (R-6/inch)</option>
+                    <option value="batt">Batt (R-3.5/inch)</option>
+                    <option value="polyiso">Polyiso (R-6/inch)</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="floor-thickness">Thickness (in.)</label>
+                  <input type="number" id="floor-thickness" min="0" step="0.1" value="0" />
+                </div>
+
+                <div class="stats-row">
+                  <div class="stat-box">
+                    <div class="stat-label">Provided</div>
+                    <div class="stat-value">R-<span id="floor-provided">0</span></div>
+                  </div>
+                  <div class="stat-box">
+                    <div class="stat-label">Required</div>
+                    <div class="stat-value">R-<span id="floor-required-inline">—</span></div>
+                  </div>
+                </div>
+
+                <div class="svg-wrap">
+                  <svg viewBox="0 0 200 95" preserveAspectRatio="xMidYMid meet" aria-label="Floor insulation section view">
+                    <defs>
+                      <linearGradient id="insulationGradient" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#86d7ff" />
+                        <stop offset="55%" stop-color="#4da8ff" />
+                        <stop offset="100%" stop-color="#2563eb" />
+                      </linearGradient>
+                      <linearGradient id="steelGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#a6b3c8" />
+                        <stop offset="100%" stop-color="#6a7b97" />
+                      </linearGradient>
+                    </defs>
+                    <rect x="0" y="58" width="200" height="20" fill="url(#steelGradient)" rx="4"></rect>
+                    <rect x="0" y="80" width="200" height="8" fill="#334155" rx="3"></rect>
+                    <rect x="0" y="58" width="200" height="0" class="insulation" id="floor-insulation"></rect>
+                    <text x="100" y="18" text-anchor="middle" fill="#cbd5e1" font-size="9">INTERIOR</text>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="component" id="ceiling">
+                <div class="component-header">
+                  <div>
+                    <h3>Ceiling</h3>
+                    <div class="component-sub">Roof/ceiling assembly</div>
+                  </div>
+                  <span id="ceiling-badge" class="badge badge-fail">Not compliant</span>
+                </div>
+
+                <div class="field">
+                  <label for="ceiling-type">Insulation Type</label>
+                  <select id="ceiling-type">
+                    <option value="sprayFoam">Spray Foam (R-6/inch)</option>
+                    <option value="batt">Batt (R-3.5/inch)</option>
+                    <option value="polyiso">Polyiso (R-6/inch)</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="ceiling-thickness">Thickness (in.)</label>
+                  <input type="number" id="ceiling-thickness" min="0" step="0.1" value="0" />
+                </div>
+
+                <div class="stats-row">
+                  <div class="stat-box">
+                    <div class="stat-label">Provided</div>
+                    <div class="stat-value">R-<span id="ceiling-provided">0</span></div>
+                  </div>
+                  <div class="stat-box">
+                    <div class="stat-label">Required</div>
+                    <div class="stat-value">R-<span id="ceiling-required-inline">—</span></div>
+                  </div>
+                </div>
+
+                <div class="svg-wrap">
+                  <svg viewBox="0 0 200 95" preserveAspectRatio="xMidYMid meet" aria-label="Ceiling insulation section view">
+                    <defs>
+                      <linearGradient id="steelGradientCeiling" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#a6b3c8" />
+                        <stop offset="100%" stop-color="#6a7b97" />
+                      </linearGradient>
+                    </defs>
+                    <rect x="0" y="8" width="200" height="20" fill="url(#steelGradientCeiling)" rx="4"></rect>
+                    <rect x="0" y="6" width="200" height="6" fill="#334155" rx="3"></rect>
+                    <rect x="0" y="28" width="200" height="0" class="insulation" id="ceiling-insulation"></rect>
+                    <text x="100" y="86" text-anchor="middle" fill="#cbd5e1" font-size="9">INTERIOR</text>
+                  </svg>
+                </div>
+              </div>
+
+              <div class="component" id="walls">
+                <div class="component-header">
+                  <div>
+                    <h3>Walls</h3>
+                    <div class="component-sub">Container sidewall assembly</div>
+                  </div>
+                  <span id="wall-badge" class="badge badge-fail">Not compliant</span>
+                </div>
+
+                <div class="field">
+                  <div class="field-legend">Configuration</div>
+                  <div class="radio-pills">
+                    <label><input type="radio" name="wall-config" value="cavityOnly" checked onclick="toggleWallInputs()"> Cavity Only</label>
+                    <label><input type="radio" name="wall-config" value="cavityContinuous" onclick="toggleWallInputs()"> Cavity + Continuous</label>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="field-legend">Location</div>
+                  <div class="radio-pills">
+                    <label><input type="radio" name="wall-location" value="inside" checked onclick="updateWallRValue()"> Inside</label>
+                    <label><input type="radio" name="wall-location" value="outside" onclick="updateWallRValue()"> Outside</label>
+                  </div>
+                </div>
+
+                <div id="wall-cavity-inputs">
+                  <div class="field">
+                    <label for="wall-cavity-type">Cavity Type</label>
+                    <select id="wall-cavity-type">
+                      <option value="sprayFoam">Spray Foam (R-6/inch)</option>
+                      <option value="batt">Batt (R-3.5/inch)</option>
+                      <option value="polyiso">Polyiso (R-6/inch)</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="wall-cavity-thickness">Thickness (in.)</label>
+                    <input type="number" id="wall-cavity-thickness" min="0" step="0.1" value="0" />
+                  </div>
+                </div>
+
+                <div id="wall-continuous-inputs" class="hidden">
+                  <div class="field">
+                    <label for="wall-continuous-type">Continuous Type</label>
+                    <select id="wall-continuous-type">
+                      <option value="sprayFoam">Spray Foam (R-6/inch)</option>
+                      <option value="batt">Batt (R-3.5/inch)</option>
+                      <option value="polyiso">Polyiso (R-6/inch)</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="wall-continuous-thickness">Thickness (in.)</label>
+                    <input type="number" id="wall-continuous-thickness" min="0" step="0.1" value="0" />
+                  </div>
+                </div>
+
+                <div class="stats-row">
+                  <div class="stat-box">
+                    <div class="stat-label">Provided</div>
+                    <div class="stat-value" id="wall-provided">Cavity: R-0, Continuous: R-0</div>
+                  </div>
+                  <div class="stat-box">
+                    <div class="stat-label">Required</div>
+                    <div class="stat-value">R-<span id="wall-required-inline">—</span></div>
+                  </div>
+                </div>
+
+                <div class="svg-wrap">
+                  <svg viewBox="0 0 240 110" preserveAspectRatio="xMidYMid meet" aria-label="Wall insulation section view">
+                    <defs>
+                      <pattern id="corrugationPattern" patternUnits="userSpaceOnUse" width="10" height="100">
+                        <path d="M0 0 Q2.5 5, 5 0 Q7.5 -5, 10 0" fill="none" stroke="#7c8ba1" stroke-width="0.7"></path>
+                      </pattern>
+                    </defs>
+                    <text x="50" y="18" text-anchor="middle" fill="#cbd5e1" font-size="9">INTERIOR</text>
+                    <text x="190" y="18" text-anchor="middle" fill="#cbd5e1" font-size="9">EXTERIOR</text>
+                    <rect x="108" y="24" width="24" height="64" fill="#8ea0b8" rx="4"></rect>
+                    <rect x="108" y="24" width="24" height="64" fill="url(#corrugationPattern)" opacity="0.55"></rect>
+                    <rect x="68" y="24" width="0" height="64" class="insulation" id="wall-insulation-inside" rx="4"></rect>
+                    <rect x="132" y="24" width="0" height="64" class="insulation" id="wall-insulation-outside" rx="4"></rect>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="disclaimer">
+            <strong>Disclaimer:</strong> This tool provides estimates based on IECC 2021 prescriptive R-values.
+            Requirements may vary by jurisdiction, adoption cycle, and project conditions. Verify against applicable code,
+            local amendments, and final design intent.
+          </div>
+        </section>
+      </div>
+
+      <div class="right-stack">
+        <section class="panel summary-panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h2>Live Compliance Snapshot</h2>
+            </div>
+            <p class="panel-subtitle">Quick read for staff before copying the note into plans.</p>
+          </div>
+          <div class="panel-body">
+            <div class="summary-score">
+              <div class="score-pill">
+                <span class="score-name">Floor</span>
+                <span class="score-value" id="score-floor">Pending</span>
+              </div>
+              <div class="score-pill">
+                <span class="score-name">Ceiling</span>
+                <span class="score-value" id="score-ceiling">Pending</span>
+              </div>
+              <div class="score-pill">
+                <span class="score-name">Walls</span>
+                <span class="score-value" id="score-walls">Pending</span>
+              </div>
+            </div>
+
+            <div class="callout">
+              <div class="callout-title">Selected Basis</div>
+              <p><strong>State:</strong> <span id="summary-state">—</span><br><strong>Climate Zone:</strong> <span id="summary-zone">—</span></p>
+            </div>
+
+            <div class="callout">
+              <div class="callout-title">What This Note Block Does</div>
+              <ul>
+                <li>Shows a formatted example note for plan-sheet use.</li>
+                <li>Pulls required IECC values from the selected climate zone.</li>
+                <li>Keeps copy/paste workflow clean for your team.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <h2>Example Requirements Note</h2>
+            </div>
+            <p class="panel-subtitle">Copy-ready block modeled after your plan note format.</p>
+          </div>
+          <div class="panel-body">
+            <div class="copy-toolbar">
+              <div>
+                <div class="callout-title" style="margin-bottom:4px;">Generated Output</div>
+                <div class="copy-status" id="copy-status">Updates automatically when state, climate zone, or insulation selections change.</div>
+              </div>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn" type="button" onclick="copyExampleNote()">Copy Note</button>
+                <button class="btn secondary" type="button" onclick="selectExampleNote()">Select Text</button>
+              </div>
+            </div>
+            <div class="note-grid">
+              <textarea class="note-output" id="example-note-output" spellcheck="false"></textarea>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const states = [
+      { name: "Alabama", code: "AL" }, { name: "Alaska", code: "AK" }, { name: "Arizona", code: "AZ" },
+      { name: "Arkansas", code: "AR" }, { name: "California", code: "CA" }, { name: "Colorado", code: "CO" },
+      { name: "Connecticut", code: "CT" }, { name: "Delaware", code: "DE" }, { name: "Florida", code: "FL" },
+      { name: "Georgia", code: "GA" }, { name: "Hawaii", code: "HI" }, { name: "Idaho", code: "ID" },
+      { name: "Illinois", code: "IL" }, { name: "Indiana", code: "IN" }, { name: "Iowa", code: "IA" },
+      { name: "Kansas", code: "KS" }, { name: "Kentucky", code: "KY" }, { name: "Louisiana", code: "LA" },
+      { name: "Maine", code: "ME" }, { name: "Maryland", code: "MD" }, { name: "Massachusetts", code: "MA" },
+      { name: "Michigan", code: "MI" }, { name: "Minnesota", code: "MN" }, { name: "Mississippi", code: "MS" },
+      { name: "Missouri", code: "MO" }, { name: "Montana", code: "MT" }, { name: "Nebraska", code: "NE" },
+      { name: "Nevada", code: "NV" }, { name: "New Hampshire", code: "NH" }, { name: "New Jersey", code: "NJ" },
+      { name: "New Mexico", code: "NM" }, { name: "New York", code: "NY" }, { name: "North Carolina", code: "NC" },
+      { name: "North Dakota", code: "ND" }, { name: "Ohio", code: "OH" }, { name: "Oklahoma", code: "OK" },
+      { name: "Oregon", code: "OR" }, { name: "Pennsylvania", code: "PA" }, { name: "Rhode Island", code: "RI" },
+      { name: "South Carolina", code: "SC" }, { name: "South Dakota", code: "SD" }, { name: "Tennessee", code: "TN" },
+      { name: "Texas", code: "TX" }, { name: "Utah", code: "UT" }, { name: "Vermont", code: "VT" },
+      { name: "Virginia", code: "VA" }, { name: "Washington", code: "WA" }, { name: "West Virginia", code: "WV" },
+      { name: "Wisconsin", code: "WI" }, { name: "Wyoming", code: "WY" }
+    ];
+
+    const stateClimateZones = {
+      "AL": ["3A"], "AK": ["7", "8"], "AZ": ["2B", "3B", "4B", "5B"], "AR": ["3A", "4A"],
+      "CA": ["2B", "3B", "3C", "4B", "5B", "6B"], "CO": ["4B", "5B", "6B", "7"], "CT": ["5A"],
+      "DE": ["4A"], "FL": ["1A", "2A"], "GA": ["2A", "3A", "4A"], "HI": ["1A"], "ID": ["5B", "6B"],
+      "IL": ["4A", "5A"], "IN": ["4A", "5A"], "IA": ["5A", "6A"], "KS": ["4A", "4B", "5A"],
+      "KY": ["4A", "5A"], "LA": ["2A", "3A"], "ME": ["6A"], "MD": ["4A"], "MA": ["5A"],
+      "MI": ["5A", "6A"], "MN": ["6A", "7"], "MS": ["3A"], "MO": ["4A", "5A"], "MT": ["5B", "6B", "7"],
+      "NE": ["5A", "5B"], "NV": ["3B", "4B", "5B"], "NH": ["6A"], "NJ": ["4A"], "NM": ["3B", "4B", "5B"],
+      "NY": ["4A", "5A", "6A"], "NC": ["3A", "4A"], "ND": ["6A", "7"], "OH": ["5A"], "OK": ["3A", "3B", "4A"],
+      "OR": ["4C", "5B", "6B"], "PA": ["4A", "5A"], "RI": ["5A"], "SC": ["3A"], "SD": ["5A", "6A"],
+      "TN": ["3A", "4A"], "TX": ["2A", "2B", "3A", "3B", "4A", "4B"], "UT": ["3B", "4B", "5B", "6B"],
+      "VT": ["6A"], "VA": ["4A"], "WA": ["4C", "5B", "6B"], "WV": ["4A", "5A"], "WI": ["6A", "7"],
+      "WY": ["5B", "6B", "7"]
+    };
+
+    const rValuesByZone = {
+      "1": { ceiling: "30", wall: "13", floor: "13" },
+      "1A": { ceiling: "30", wall: "13", floor: "13" },
+      "2": { ceiling: "38", wall: "13", floor: "13" },
+      "2A": { ceiling: "38", wall: "13", floor: "13" },
+      "2B": { ceiling: "38", wall: "13", floor: "13" },
+      "3": { ceiling: "38", wall: "20 or 13+5", floor: "19" },
+      "3A": { ceiling: "38", wall: "20 or 13+5", floor: "19" },
+      "3B": { ceiling: "38", wall: "20 or 13+5", floor: "19" },
+      "3C": { ceiling: "38", wall: "20 or 13+5", floor: "19" },
+      "4": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "19" },
+      "4A": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "19" },
+      "4B": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "19" },
+      "4C": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "19" },
+      "5": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" },
+      "5A": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" },
+      "5B": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" },
+      "6": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" },
+      "6A": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" },
+      "6B": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" },
+      "7": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" },
+      "8": { ceiling: "60", wall: "30 or 20+5 or 13+10", floor: "30" }
+    };
+
+    const insulationRValues = {
+      sprayFoam: 6,
+      batt: 3.5,
+      polyiso: 6
+    };
+
+    const stateSelect = document.getElementById('state');
+    states.forEach(state => {
+      const option = document.createElement('option');
+      option.value = state.code;
+      option.textContent = state.name;
+      stateSelect.appendChild(option);
+    });
+
+    function updateClimateZones() {
+      const state = stateSelect.value;
+      const zones = stateClimateZones[state] || [];
+      const climateZoneSelect = document.getElementById('climateZone');
+      climateZoneSelect.innerHTML = '<option value="">-- Select Climate Zone --</option>';
+
+      zones.forEach(zone => {
+        const option = document.createElement('option');
+        option.value = zone;
+        option.textContent = zone;
+        climateZoneSelect.appendChild(option);
+      });
+
+      displayRequiredRValues();
+      updateSummaryContext();
+      updateExampleNote();
+    }
+
+    function displayRequiredRValues() {
+      const climateZone = document.getElementById('climateZone').value;
+      const rValues = rValuesByZone[climateZone];
+
+      if (rValues) {
+        document.getElementById('req-ceiling').textContent = rValues.ceiling;
+        document.getElementById('req-walls').textContent = rValues.wall;
+        document.getElementById('req-floor').textContent = rValues.floor;
+        document.getElementById('floor-required-inline').textContent = rValues.floor;
+        document.getElementById('ceiling-required-inline').textContent = rValues.ceiling;
+        document.getElementById('wall-required-inline').textContent = rValues.wall;
+        document.getElementById('zone-badge').textContent = `IECC 2021 • CZ ${climateZone}`;
+        document.getElementById('required-r-values').style.display = 'block';
+      } else {
+        document.getElementById('required-r-values').style.display = 'none';
+        document.getElementById('floor-required-inline').textContent = '—';
+        document.getElementById('ceiling-required-inline').textContent = '—';
+        document.getElementById('wall-required-inline').textContent = '—';
+        document.getElementById('zone-badge').textContent = 'IECC 2021';
+      }
+
+      updateFloorRValue();
+      updateCeilingRValue();
+      updateWallRValue();
+      updateSummaryContext();
+      updateExampleNote();
+    }
+
+    function updateFloorRValue() {
+      const type = document.getElementById('floor-type').value;
+      const thickness = parseFloat(document.getElementById('floor-thickness').value) || 0;
+      const R_provided = (insulationRValues[type] * thickness).toFixed(1);
+      document.getElementById('floor-provided').textContent = R_provided;
+
+      const climateZone = document.getElementById('climateZone').value;
+      const rValues = rValuesByZone[climateZone];
+      let meets = false;
+      if (rValues) {
+        const R_required = parseFloat(rValues.floor);
+        meets = parseFloat(R_provided) >= R_required;
+      }
+
+      setBadgeState('floor-badge', meets);
+      document.getElementById('score-floor').textContent = climateZone ? (meets ? 'Pass' : 'Fail') : 'Pending';
+
+      const insHeight = Math.min(thickness * 7, 50);
+      document.getElementById('floor-insulation').setAttribute('height', insHeight);
+      document.getElementById('floor-insulation').setAttribute('y', 58 - insHeight);
+      updateExampleNote();
+    }
+
+    function updateCeilingRValue() {
+      const type = document.getElementById('ceiling-type').value;
+      const thickness = parseFloat(document.getElementById('ceiling-thickness').value) || 0;
+      const R_provided = (insulationRValues[type] * thickness).toFixed(1);
+      document.getElementById('ceiling-provided').textContent = R_provided;
+
+      const climateZone = document.getElementById('climateZone').value;
+      const rValues = rValuesByZone[climateZone];
+      let meets = false;
+      if (rValues) {
+        const R_required = parseFloat(rValues.ceiling);
+        meets = parseFloat(R_provided) >= R_required;
+      }
+
+      setBadgeState('ceiling-badge', meets);
+      document.getElementById('score-ceiling').textContent = climateZone ? (meets ? 'Pass' : 'Fail') : 'Pending';
+
+      const insHeight = Math.min(thickness * 7, 50);
+      document.getElementById('ceiling-insulation').setAttribute('height', insHeight);
+      updateExampleNote();
+    }
+
+    function toggleWallInputs() {
+      const config = document.querySelector('input[name="wall-config"]:checked').value;
+      document.getElementById('wall-continuous-inputs').classList.toggle('hidden', config !== 'cavityContinuous');
+      updateWallRValue();
+    }
+
+    function updateWallRValue() {
+      const config = document.querySelector('input[name="wall-config"]:checked').value;
+      const location = document.querySelector('input[name="wall-location"]:checked').value;
+      let R_cavity = 0;
+      let R_continuous = 0;
+
+      const cavityType = document.getElementById('wall-cavity-type').value;
+      const cavityThickness = parseFloat(document.getElementById('wall-cavity-thickness').value) || 0;
+      R_cavity = (insulationRValues[cavityType] * cavityThickness).toFixed(1);
+
+      let continuousThickness = 0;
+      let continuousType = document.getElementById('wall-continuous-type').value;
+      if (config === 'cavityContinuous') {
+        continuousThickness = parseFloat(document.getElementById('wall-continuous-thickness').value) || 0;
+        continuousType = document.getElementById('wall-continuous-type').value;
+        R_continuous = (insulationRValues[continuousType] * continuousThickness).toFixed(1);
+      }
+
+      document.getElementById('wall-provided').textContent = `Cavity: R-${R_cavity}, Continuous: R-${R_continuous}`;
+
+      const climateZone = document.getElementById('climateZone').value;
+      const rValues = rValuesByZone[climateZone];
+      let meetsReq = false;
+      if (rValues) {
+        const requiredStr = rValues.wall;
+        meetsReq = meetsWallRequirement(requiredStr, parseFloat(R_cavity), parseFloat(R_continuous));
+      }
+
+      setBadgeState('wall-badge', meetsReq);
+      document.getElementById('score-walls').textContent = climateZone ? (meetsReq ? 'Pass' : 'Fail') : 'Pending';
+
+      const cavityWidth = Math.min(cavityThickness * 9, 36);
+      const continuousWidth = config === 'cavityContinuous' ? Math.min(continuousThickness * 9, 32) : 0;
+      const insideWidth = location === 'inside' ? cavityWidth + continuousWidth : 0;
+      const outsideWidth = location === 'outside' ? cavityWidth + continuousWidth : 0;
+
+      document.getElementById('wall-insulation-inside').setAttribute('width', insideWidth);
+      document.getElementById('wall-insulation-inside').setAttribute('x', 108 - insideWidth);
+      document.getElementById('wall-insulation-outside').setAttribute('width', outsideWidth);
+      updateExampleNote();
+    }
+
+    function meetsWallRequirement(requiredStr, R_cavity, R_continuous) {
+      const options = requiredStr.split(' or ');
+      for (let option of options) {
+        if (option.includes('+')) {
+          const [cavityReq, continuousReq] = option.split('+').map(s => parseFloat(s));
+          if (R_cavity >= cavityReq && R_continuous >= continuousReq) return true;
+        } else {
+          const cavityReq = parseFloat(option);
+          if (R_cavity >= cavityReq && R_continuous >= 0) return true;
+        }
+      }
+      return false;
+    }
+
+    function setBadgeState(id, pass) {
+      const el = document.getElementById(id);
+      el.textContent = pass ? 'Compliant' : 'Not compliant';
+      el.className = `badge ${pass ? 'badge-pass' : 'badge-fail'}`;
+    }
+
+    function getSelectedStateName() {
+      const selected = states.find(state => state.code === stateSelect.value);
+      return selected ? selected.name : '—';
+    }
+
+    function updateSummaryContext() {
+      const zone = document.getElementById('climateZone').value || '—';
+      document.getElementById('summary-state').textContent = getSelectedStateName();
+      document.getElementById('summary-zone').textContent = zone;
+    }
+
+    function updateExampleNote() {
+      const zone = document.getElementById('climateZone').value;
+      const stateName = getSelectedStateName();
+      const rValues = rValuesByZone[zone];
+      const output = document.getElementById('example-note-output');
+      const config = document.querySelector('input[name="wall-config"]:checked').value;
+      const location = document.querySelector('input[name="wall-location"]:checked').value;
+
+      const floorType = document.getElementById('floor-type').selectedOptions[0].textContent;
+      const floorThickness = parseFloat(document.getElementById('floor-thickness').value) || 0;
+      const floorR = document.getElementById('floor-provided').textContent;
+
+      const ceilingType = document.getElementById('ceiling-type').selectedOptions[0].textContent;
+      const ceilingThickness = parseFloat(document.getElementById('ceiling-thickness').value) || 0;
+      const ceilingR = document.getElementById('ceiling-provided').textContent;
+
+      const wallCavityType = document.getElementById('wall-cavity-type').selectedOptions[0].textContent;
+      const wallCavityThickness = parseFloat(document.getElementById('wall-cavity-thickness').value) || 0;
+      const wallContinuousType = document.getElementById('wall-continuous-type').selectedOptions[0].textContent;
+      const wallContinuousThickness = parseFloat(document.getElementById('wall-continuous-thickness').value) || 0;
+
+      if (!rValues || !zone) {
+        output.value = `INSULATION NOTES:\n\nA. SELECT STATE AND CLIMATE ZONE TO GENERATE PROJECT-SPECIFIC REQUIREMENTS NOTE.\n\nB. R-800 COMBUSTIBLE INSULATION SHALL BE SEPARATED A MINIMUM OF 3-INCHES FROM RECESSED LIGHTING FIXTURES, FAN MOTORS, AND OTHER HEAT-PRODUCING DEVICES UNLESS THE DEVICE IS LISTED FOR LESSER CLEARANCES.`;
+        return;
+      }
+
+      const wallAssemblyText = config === 'cavityContinuous'
+        ? `${location.toUpperCase()} WALL INSULATION PROVIDED AS CAVITY INSULATION (${wallCavityType}, ${formatThickness(wallCavityThickness)}) PLUS CONTINUOUS INSULATION (${wallContinuousType}, ${formatThickness(wallContinuousThickness)}).`
+        : `${location.toUpperCase()} WALL INSULATION PROVIDED AS CAVITY INSULATION ONLY (${wallCavityType}, ${formatThickness(wallCavityThickness)}).`;
+
+      output.value = `INSULATION NOTES:\n\nA. 2021 INTERNATIONAL ENERGY CONSERVATION CODE REQUIREMENTS FOR LOW-RISE RESIDENTIAL 3A: SEE CURRENT ENERGY CODE SPECIFICATIONS. BASIC BUILDING ENVELOPE COMPLIANCE PATH: ROOF/ATTIC R-${rValues.ceiling}; JOIST VAULTS R-${rValues.ceiling}; WALLS R-${rValues.wall}; FLOOR R-${rValues.floor}; WINDOWS U-VALUE .35. WATER SERVICE PIPE IN UNCONDITIONED AREA R-3.\n\nB. PROJECT BASIS: ${stateName.toUpperCase()}, CLIMATE ZONE ${zone}. FLOOR INSULATION PROVIDED AS ${floorType.toUpperCase()} AT ${formatThickness(floorThickness)} FOR APPROX. R-${floorR}. CEILING INSULATION PROVIDED AS ${ceilingType.toUpperCase()} AT ${formatThickness(ceilingThickness)} FOR APPROX. R-${ceilingR}. ${wallAssemblyText}\n\nC. EXAMPLE REQUIREMENTS NOTE: VERIFY FINAL INSULATION MATERIALS, THICKNESSES, AND INSTALLATION METHODS WITH APPROVED ARCHITECTURAL / ENERGY DOCUMENTS AND APPLICABLE LOCAL CODE AMENDMENTS PRIOR TO CONSTRUCTION.\n\nD. R-800 COMBUSTIBLE INSULATION SHALL BE SEPARATED A MINIMUM OF 3-INCHES FROM RECESSED LIGHTING FIXTURES, FAN MOTORS, AND OTHER HEAT-PRODUCING DEVICES UNLESS THE DEVICE IS LISTED FOR LESSER CLEARANCES.`;
+    }
+
+    function formatThickness(value) {
+      return `${value.toFixed(1)} INCHES`;
+    }
+
+    function selectExampleNote() {
+      const textarea = document.getElementById('example-note-output');
+      textarea.focus();
+      textarea.select();
+      setCopyStatus('Text selected.');
+    }
+
+    async function copyExampleNote() {
+      const textarea = document.getElementById('example-note-output');
+      try {
+        await navigator.clipboard.writeText(textarea.value);
+        setCopyStatus('Note copied to clipboard.');
+      } catch (err) {
+        textarea.focus();
+        textarea.select();
+        setCopyStatus('Clipboard blocked by browser. Text selected for manual copy.');
+      }
+    }
+
+    function setCopyStatus(message) {
+      document.getElementById('copy-status').textContent = message;
+    }
+
+    document.getElementById('floor-type').addEventListener('change', updateFloorRValue);
+    document.getElementById('floor-thickness').addEventListener('input', updateFloorRValue);
+    document.getElementById('ceiling-type').addEventListener('change', updateCeilingRValue);
+    document.getElementById('ceiling-thickness').addEventListener('input', updateCeilingRValue);
+    document.getElementById('wall-cavity-type').addEventListener('change', updateWallRValue);
+    document.getElementById('wall-cavity-thickness').addEventListener('input', updateWallRValue);
+    document.getElementById('wall-continuous-type').addEventListener('change', updateWallRValue);
+    document.getElementById('wall-continuous-thickness').addEventListener('input', updateWallRValue);
+
+    updateSummaryContext();
+    updateExampleNote();
+  </script>
+</body>
+</html>
